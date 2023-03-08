@@ -5,3 +5,4 @@ info.dat
 ready_trader_go/__pycache__/
 tradergo_venv/
 autotrader.log
+exchange.log

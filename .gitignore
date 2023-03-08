@@ -1,2 +1,3 @@
 ./score_board.csv
 ./match_events.csv
+./__pycache__/

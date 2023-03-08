@@ -60,10 +60,10 @@ class AutoTrader(BaseAutoTrader):
 
     def on_hedge_filled_message(self, client_order_id: int, price: int, volume: int) -> None:
         """Called when one of your hedge orders is filled.
-
         The price is the average price at which the order was (partially) filled,
         which may be better than the order's limit price. The volume is
         the number of lots filled at that price.
+        hi
         """
         self.logger.info("received hedge filled for order %d with average price %d and volume %d", client_order_id,
                          price, volume)

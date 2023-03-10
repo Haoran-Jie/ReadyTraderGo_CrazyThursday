@@ -1144,3 +1144,5 @@ task: <Task pending name='Task-2' coro=<Subscriber._subscribe_worker() done, def
 2023-03-10 21:34:03,713 [INFO   ] [APP] closing event loop
 2023-03-10 21:34:03,725 [ERROR  ] [asyncio] Task was destroyed but it is pending!
 task: <Task pending name='Task-2' coro=<Subscriber._subscribe_worker() done, defined at /Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/ready_trader_go/pubsub.py:122> cb=[MmapSubscriber.__init__.<locals>.<lambda>() at /Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/ready_trader_go/pubsub.py:176]>
+2023-03-10 22:11:31,912 [INFO   ] [APP] autotrader_pairtrading started with arguments={rtg.py, run, autotrader_pairtrading.py}
+2023-03-10 22:11:31,912 [INFO   ] [APP] configuration={"Execution":{"Host":"127.0.0.1","Port":12345},"Information":{"Type":"mmap","Name":"info.dat"},"TeamName":"CrazyThursday_PairTrading","Secret":"fengkuangxingqisi"}

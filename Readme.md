@@ -246,3 +246,6 @@ python3 -m venv tradergo_venv
 pip3 install PySide6
 
 source tradergo_venv/bin/activate
+
+
+python3 rtg.py run autotrader_pairtrading.py

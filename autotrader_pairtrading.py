@@ -17,7 +17,7 @@
 #     <https://www.gnu.org/licenses/>.
 import asyncio
 import itertools
-
+import numpy as np
 from typing import List
 
 from ready_trader_go import BaseAutoTrader, Instrument, Lifespan, MAXIMUM_ASK, MINIMUM_BID, Side
@@ -46,8 +46,12 @@ class AutoTrader(BaseAutoTrader):
         self.order_ids = itertools.count(1)
         self.bids = set()
         self.asks = set()
-        self.prices = []
+        self.sell_price = 0
+        self.buy_price = 0
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
+        self.now_sequence_number = 0
+        self.prices = {"etf":[],"future":[],"diff":[]}
+
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
         """Called when the exchange detects an error.
@@ -78,53 +82,38 @@ class AutoTrader(BaseAutoTrader):
         prices are reported along with the volume available at each of those
         price levels.
         """
-        self.logger.info("received order book for instrument %d with sequence number %d", instrument,
+        self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
                          sequence_number)
-        count = 0
+        
         if instrument == Instrument.FUTURE:
-            self.prices.append((bid_prices[0]+ask_prices[0])/2)
-            price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
-            new_bid_price = bid_prices[0] + price_adjustment if bid_prices[0] != 0 else 0
-            new_ask_price = ask_prices[0] + price_adjustment if ask_prices[0] != 0 else 0
-            if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
-                self.send_cancel_order(self.bid_id)
-                self.bid_id = 0
-                    
-            if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
-                self.send_cancel_order(self.ask_id)
-                self.ask_id = 0
-            if len(self.prices)<100:
+            self.prices["future"].append((max(bid_prices)+min(ask_prices))/2)
+            # price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
+            # new_bid_price = bid_prices[0] + price_adjustment if bid_prices[0] != 0 else 0
+            # new_ask_price = ask_prices[0] + price_adjustment if ask_prices[0] != 0 else 0
 
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT:
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.bids.add(self.bid_id)
-                    self.logger.info("inserted bid order")
+            # if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
+            #     self.send_cancel_order(self.bid_id)
+            #     self.bid_id = 0
+            # if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
+            #     self.send_cancel_order(self.ask_id)
+            #     self.ask_id = 0
 
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT:
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.asks.add(self.ask_id)
-                    self.logger.info("inserted ask order")
-            else:
-                short_ma = sum(self.prices[-30:])/30
-                long_ma = sum(self.prices[-100:])/100
-                #timing
-                if short_ma<long_ma and self.bid_id == 0 and self.position < POSITION_LIMIT:
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.G)
-                    self.bids.add(self.bid_id)
-                    self.logger.info("inserted bid order :)")
-                elif short_ma>long_ma and self.ask_id == 0 and self.position > -POSITION_LIMIT:
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.asks.add(self.ask_id)
-                    self.logger.info("inserted ask order :)")
-                    
+            # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT:
+            #     self.bid_id = next(self.order_ids)
+            #     self.bid_price = new_bid_price
+            #     self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
+            #     self.bids.add(self.bid_id)
+
+            # if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT:
+            #     self.ask_id = next(self.order_ids)
+            #     self.ask_price = new_ask_price
+            #     self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
+            #     self.asks.add(self.ask_id)
+        if instrument == Instrument.ETF:
+            self.prices["etf"].append((max(bid_prices)+min(ask_prices))/2)
+            self.prices["diff"].append(self.prices["etf"][-1]-self.prices["future"][-1])
+            self.logger.info(self.prices["diff"][-1])
+            
 
     def on_order_filled_message(self, client_order_id: int, price: int, volume: int) -> None:
         """Called when one of your orders is filled, partially or fully.

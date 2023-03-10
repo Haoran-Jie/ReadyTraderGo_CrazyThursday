@@ -46,11 +46,12 @@ class AutoTrader(BaseAutoTrader):
         self.order_ids = itertools.count(1)
         self.bids = set()
         self.asks = set()
-        self.sell_price = 0
-        self.buy_price = 0
+        self.sell_price = 20
+        self.buy_price = -20
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
         self.now_sequence_number = 0
         self.prices = {"etf":[0]*1000,"future":[0]*1000,"diff":[0]*1000}
+        self.buy_flag = self.sell_price = False
 
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
@@ -84,41 +85,63 @@ class AutoTrader(BaseAutoTrader):
         """
         self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
                          sequence_number)
-        
+        price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
+        new_bid_price = bid_prices[0] + price_adjustment if bid_prices[0] != 0 else 0
+        new_ask_price = ask_prices[0] + price_adjustment if ask_prices[0] != 0 else 0
+
         if instrument == Instrument.FUTURE:
             self.prices["future"][sequence_number]=((max(bid_prices)+min(ask_prices))/2)
             self.logger.info("futures: " + str(self.prices["future"]))
             if(self.prices["etf"][sequence_number]!=0):
-                self.prices["diff"][sequence_number]=(self.prices["etf"][sequence_number]+self.prices["future"][sequence_number])/2
-                self.logger.info(self.prices["diff"][sequence_number])
-            # price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
-            # new_bid_price = bid_prices[0] + price_adjustment if bid_prices[0] != 0 else 0
-            # new_ask_price = ask_prices[0] + price_adjustment if ask_prices[0] != 0 else 0
+                now_diff = self.prices["etf"][sequence_number]-self.prices["future"][sequence_number]
+                self.prices["diff"][sequence_number]=now_diff
+                self.logger.info(now_diff)
 
-            # if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
-            #     self.send_cancel_order(self.bid_id)
-            #     self.bid_id = 0
-            # if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
-            #     self.send_cancel_order(self.ask_id)
-            #     self.ask_id = 0
+                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
+                    self.send_cancel_order(self.bid_id)
+                    self.bid_id = 0
+                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
+                    self.send_cancel_order(self.ask_id)
+                    self.ask_id = 0
 
-            # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT:
-            #     self.bid_id = next(self.order_ids)
-            #     self.bid_price = new_bid_price
-            #     self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-            #     self.bids.add(self.bid_id)
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and now_diff<self.buy_price and abs(now_diff)<200 and not self.buy_flag:
+                    self.bid_id = next(self.order_ids)
+                    self.bid_price = new_bid_price
+                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
+                    self.bids.add(self.bid_id)
 
-            # if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT:
-            #     self.ask_id = next(self.order_ids)
-            #     self.ask_price = new_ask_price
-            #     self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-            #     self.asks.add(self.ask_id)
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and now_diff>self.sell_price and abs(now_diff)<200 and self.buy_flag:
+                    self.buy_flag=False
+                    self.ask_id = next(self.order_ids)
+                    self.ask_price = new_ask_price
+                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
+                    self.asks.add(self.ask_id)
+
         if instrument == Instrument.ETF:
             self.prices["etf"][sequence_number]=((max(bid_prices)+min(ask_prices))/2)
             if(self.prices["future"][sequence_number]!=0):
-                self.prices["diff"][sequence_number]=(self.prices["etf"][sequence_number]+self.prices["future"][sequence_number])/2
-                self.logger.info(self.prices["diff"][sequence_number])
-            self.logger.info("etf: " + str(self.prices["etf"]))
+                now_diff = self.prices["etf"][sequence_number]-self.prices["future"][sequence_number]
+                self.prices["diff"][sequence_number]=now_diff
+                self.logger.info(now_diff)
+                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
+                    self.send_cancel_order(self.bid_id)
+                    self.bid_id = 0
+                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
+                    self.send_cancel_order(self.ask_id)
+                    self.ask_id = 0
+
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and now_diff<self.buy_price and abs(now_diff)<200 and not self.buy_flag:
+                    self.bid_id = next(self.order_ids)
+                    self.bid_price = new_bid_price
+                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
+                    self.bids.add(self.bid_id)
+
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and now_diff>self.sell_price and abs(now_diff)<200 and self.buy_flag:
+                    self.buy_flag=False
+                    self.ask_id = next(self.order_ids)
+                    self.ask_price = new_ask_price
+                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
+                    self.asks.add(self.ask_id)
 
     def mean(lis):
         return sum(lis)/len(lis)

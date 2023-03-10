@@ -52,10 +52,9 @@ class AutoTrader(BaseAutoTrader):
         self.now_sequence_number = 0
         self.prices = {"etf":[],"future":[],"diff":[]}
         self.Mid_Price = open('Mid_Price.csv', 'w')
-
-      
-
-
+        self.Order_Book = open('Order_Book.csv', 'w')
+        print("Future","ETF", file = self.Mid_Price)
+        print("Future ask prices and ask volumes , bid prices and bid volumes,","ETF ask prices and ask volumes , bid prices and bid volumes", file = self.Order_Book)
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
         """Called when the exchange detects an error.
@@ -89,13 +88,18 @@ class AutoTrader(BaseAutoTrader):
         self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
                          sequence_number)
         mid_price=(max(bid_prices)+min(ask_prices))/2
-        print("Future","ETF", file = self.Mid_Price)
+
         if instrument == Instrument.FUTURE:
             self.prices["future"].append((max(bid_prices)+min(ask_prices))/2)
             # self.logger.info("FUTURE mid price:%d",(max(bid_prices)+min(ask_prices))/2)
             # self.logger.info("FUTURE ask prices and ask volumes",ask_prices, ask_volumes)
             # self.logger.info("FUTURE bid prices and bid volumes",bid_prices, bid_volumes)
             print(mid_price,",", file = self.Mid_Price,end="")
+            # print("FUTURE ask prices and ask volumes",ask_prices,ask_volumes,",", file = self.Order_Book,end="")
+            # print("FUTURE bid prices and bid volumes",bid_prices,bid_volumes,",", file = self.Order_Book,end="")
+            print(*ask_prices,*ask_volumes,sep=",", file = self.Order_Book,end="")
+            print(*bid_prices,*bid_volumes,sep=",", file = self.Order_Book,end="")
+
             # print("FUTURE ask prices and ask volumes", ask_prices, ask_volumes, file = self.sourceFile)
             # print("FUTURE bid prices and bid volumes", bid_prices, bid_volumes, file = self.sourceFile)
              
@@ -108,6 +112,11 @@ class AutoTrader(BaseAutoTrader):
             # self.logger.info("ETF bid prices and bid volumes",bid_prices, bid_volumes)
             # print("ETF mid price:",(max(bid_prices)+min(ask_prices))/2, file = self.sourceFile)
             print(mid_price, file = self.Mid_Price)
+            # print("ETF ask prices and ask volumes",ask_prices,ask_volumes,",", file = self.Order_Book,end="")
+            # print("ETF bid prices and bid volumes",bid_prices,bid_volumes,",", file = self.Order_Book)
+            print(*ask_prices,*ask_volumes,sep=",", file = self.Order_Book,end="")
+            print(*bid_prices,*bid_volumes, sep=",", file = self.Order_Book)
+ 
  
             
 

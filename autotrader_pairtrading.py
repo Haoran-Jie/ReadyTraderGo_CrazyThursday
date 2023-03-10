@@ -51,6 +51,10 @@ class AutoTrader(BaseAutoTrader):
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
         self.now_sequence_number = 0
         self.prices = {"etf":[],"future":[],"diff":[]}
+        self.Mid_Price = open('Mid_Price.csv', 'w')
+
+      
+
 
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
@@ -84,35 +88,27 @@ class AutoTrader(BaseAutoTrader):
         """
         self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
                          sequence_number)
-        
+        mid_price=(max(bid_prices)+min(ask_prices))/2
+        print("Future","ETF", file = self.Mid_Price)
         if instrument == Instrument.FUTURE:
             self.prices["future"].append((max(bid_prices)+min(ask_prices))/2)
-            # price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
-            # new_bid_price = bid_prices[0] + price_adjustment if bid_prices[0] != 0 else 0
-            # new_ask_price = ask_prices[0] + price_adjustment if ask_prices[0] != 0 else 0
-
-            # if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
-            #     self.send_cancel_order(self.bid_id)
-            #     self.bid_id = 0
-            # if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
-            #     self.send_cancel_order(self.ask_id)
-            #     self.ask_id = 0
-
-            # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT:
-            #     self.bid_id = next(self.order_ids)
-            #     self.bid_price = new_bid_price
-            #     self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-            #     self.bids.add(self.bid_id)
-
-            # if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT:
-            #     self.ask_id = next(self.order_ids)
-            #     self.ask_price = new_ask_price
-            #     self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-            #     self.asks.add(self.ask_id)
+            # self.logger.info("FUTURE mid price:%d",(max(bid_prices)+min(ask_prices))/2)
+            # self.logger.info("FUTURE ask prices and ask volumes",ask_prices, ask_volumes)
+            # self.logger.info("FUTURE bid prices and bid volumes",bid_prices, bid_volumes)
+            print(mid_price,",", file = self.Mid_Price,end="")
+            # print("FUTURE ask prices and ask volumes", ask_prices, ask_volumes, file = self.sourceFile)
+            # print("FUTURE bid prices and bid volumes", bid_prices, bid_volumes, file = self.sourceFile)
+             
         if instrument == Instrument.ETF:
             self.prices["etf"].append((max(bid_prices)+min(ask_prices))/2)
             self.prices["diff"].append(self.prices["etf"][-1]-self.prices["future"][-1])
-            self.logger.info(self.prices["diff"][-1])
+            # self.logger.info("ETF mid price:%d",(max(bid_prices)+min(ask_prices))/2)
+           
+            # self.logger.info("ETF ask prices and ask volumes",ask_prices, ask_volumes)
+            # self.logger.info("ETF bid prices and bid volumes",bid_prices, bid_volumes)
+            # print("ETF mid price:",(max(bid_prices)+min(ask_prices))/2, file = self.sourceFile)
+            print(mid_price, file = self.Mid_Price)
+ 
             
 
     def on_order_filled_message(self, client_order_id: int, price: int, volume: int) -> None:

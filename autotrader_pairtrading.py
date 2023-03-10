@@ -90,7 +90,7 @@ class AutoTrader(BaseAutoTrader):
             self.logger.info("futures: " + str(self.prices["future"]))
             if(self.prices["etf"][sequence_number]!=0):
                 self.prices["diff"][sequence_number]=(self.prices["etf"][sequence_number]+self.prices["future"][sequence_number])/2
-                self.logger.info(self.prices["diff"][-1])
+                self.logger.info(self.prices["diff"][sequence_number])
             # price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
             # new_bid_price = bid_prices[0] + price_adjustment if bid_prices[0] != 0 else 0
             # new_ask_price = ask_prices[0] + price_adjustment if ask_prices[0] != 0 else 0
@@ -117,8 +117,9 @@ class AutoTrader(BaseAutoTrader):
             self.prices["etf"][sequence_number]=((max(bid_prices)+min(ask_prices))/2)
             if(self.prices["future"][sequence_number]!=0):
                 self.prices["diff"][sequence_number]=(self.prices["etf"][sequence_number]+self.prices["future"][sequence_number])/2
-                self.logger.info(self.prices["diff"][-1])
+                self.logger.info(self.prices["diff"][sequence_number])
             self.logger.info("etf: " + str(self.prices["etf"]))
+
     def mean(lis):
         return sum(lis)/len(lis)
 

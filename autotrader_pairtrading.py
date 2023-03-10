@@ -51,11 +51,14 @@ class AutoTrader(BaseAutoTrader):
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
         self.now_sequence_number = 0
         self.prices = {"etf":[],"future":[],"diff":[]}
-        self.Mid_Price = open('Mid_Price.csv', 'w')
-        self.Order_Book = open('Order_Book.csv', 'w')
+        self.Mid_Price = open('csv/Mid_Price.csv', 'w')
+        self.Order_Book = open('csv/Order_Book.csv', 'w')
+        self.Future_Order_Book = open('csv/Future_Order_Book.csv', 'w')
+        self.ETF_Order_Book = open('csv/ETF_Order_Book.csv', 'w')
         print("Future","ETF", file = self.Mid_Price)
         print("Future ask prices and ask volumes , bid prices and bid volumes,","ETF ask prices and ask volumes , bid prices and bid volumes", file = self.Order_Book)
-
+        print("Future ask prices and ask volumes , bid prices and bid volumes,", file = self.Future_Order_Book)
+        print("ETF ask prices and ask volumes , bid prices and bid volumes", file = self.ETF_Order_Book)
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
         """Called when the exchange detects an error.
 
@@ -98,8 +101,14 @@ class AutoTrader(BaseAutoTrader):
             # print("FUTURE ask prices and ask volumes",ask_prices,ask_volumes,",", file = self.Order_Book,end="")
             # print("FUTURE bid prices and bid volumes",bid_prices,bid_volumes,",", file = self.Order_Book,end="")
             print(*ask_prices,*ask_volumes,sep=",", file = self.Order_Book,end="")
+            print(",", file = self.Order_Book,end="")
             print(*bid_prices,*bid_volumes,sep=",", file = self.Order_Book,end="")
-
+            print(",", file = self.Order_Book,end="")
+            
+            print(*ask_prices,*ask_volumes,sep=",", file = self.Future_Order_Book,end="")
+            print(",", file = self.Future_Order_Book,end="")
+            print(*bid_prices,*bid_volumes,sep=",", file = self.Future_Order_Book)
+           
             # print("FUTURE ask prices and ask volumes", ask_prices, ask_volumes, file = self.sourceFile)
             # print("FUTURE bid prices and bid volumes", bid_prices, bid_volumes, file = self.sourceFile)
              
@@ -115,7 +124,12 @@ class AutoTrader(BaseAutoTrader):
             # print("ETF ask prices and ask volumes",ask_prices,ask_volumes,",", file = self.Order_Book,end="")
             # print("ETF bid prices and bid volumes",bid_prices,bid_volumes,",", file = self.Order_Book)
             print(*ask_prices,*ask_volumes,sep=",", file = self.Order_Book,end="")
+            print(",", file = self.Order_Book,end="")
             print(*bid_prices,*bid_volumes, sep=",", file = self.Order_Book)
+
+            print(*ask_prices,*ask_volumes,sep=",", file = self.ETF_Order_Book,end="")
+            print(",", file = self.ETF_Order_Book,end="")
+            print(*bid_prices,*bid_volumes, sep=",", file = self.ETF_Order_Book)
  
  
             

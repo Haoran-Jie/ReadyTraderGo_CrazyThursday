@@ -60,7 +60,7 @@ The archive contains:
 * data - sample market data to use for testing
 * exchange.json - configuration file for the exchange simulator
 * ready_trader_go - the Ready Trader Go source code
-* rtg.py - Use this with Python to run Ready Trader Go 
+* rtg.py - Use this with Python to run Ready Trader Go
 
 ### Autotrader configuration
 
@@ -82,9 +82,9 @@ Each autotrader is configured with a JSON file like this:
 The elements of the autotrader configuration are:
 
 * Execution - network address for sending execution requests (e.g. to place
-an order)
+  an order)
 * Information - details of a memory-mapped file for information messages broadcast
-by the exchange simulator
+  by the exchange simulator
 * TeamName - name of the team for this autotrader (each autotrader in a match
   must have a unique name)
 * Secret - password for this autotrader
@@ -140,7 +140,7 @@ The elements of the autotrader configuration are:
 * Execution - network address to listen for autotrader connections
 * Fees - details of the fee structure
 * Information - details of a memory-mapped file used to broadcast information
-messages to autotraders
+  messages to autotraders
 * Instrument - details of the instrument to be traded
 * Limits - details of the limits by which autotraders must abide
 * Traders - team names and secrets of the autotraders
@@ -234,8 +234,13 @@ git push
 
 Do _not_ put the `autotrader.py` file in a folder and do _not_ include any other
 files (any other files will be ignored). You may only submit one autotrader (i.e.
-you cannot submit both a Python and a C++ autotrader). 
+you cannot submit both a Python and a C++ autotrader).
 
 You may replace your autotrader with a new one at any time. When each
 tournament starts we'll use the autotrader in your GIT repository at the
 cut-off time for that tournament.
+
+
+
+
+source tradergo_venv/bin/activate

@@ -50,7 +50,7 @@ class AutoTrader(BaseAutoTrader):
         self.buy_price = 0
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
         self.now_sequence_number = 0
-        self.prices = {"etf":[],"future":[],"diff":[]}
+        self.prices = {"etf":[0]*1000,"future":[0]*1000,"diff":[0]*1000}
 
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
@@ -86,7 +86,11 @@ class AutoTrader(BaseAutoTrader):
                          sequence_number)
         
         if instrument == Instrument.FUTURE:
-            self.prices["future"].append((max(bid_prices)+min(ask_prices))/2)
+            self.prices["future"][sequence_number]=((max(bid_prices)+min(ask_prices))/2)
+            self.logger.info("futures: " + str(self.prices["future"]))
+            if(self.prices["etf"][sequence_number]!=0):
+                self.prices["diff"][sequence_number]=(self.prices["etf"][sequence_number]+self.prices["future"][sequence_number])/2
+                self.logger.info(self.prices["diff"][-1])
             # price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
             # new_bid_price = bid_prices[0] + price_adjustment if bid_prices[0] != 0 else 0
             # new_ask_price = ask_prices[0] + price_adjustment if ask_prices[0] != 0 else 0
@@ -110,10 +114,13 @@ class AutoTrader(BaseAutoTrader):
             #     self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
             #     self.asks.add(self.ask_id)
         if instrument == Instrument.ETF:
-            self.prices["etf"].append((max(bid_prices)+min(ask_prices))/2)
-            self.prices["diff"].append(self.prices["etf"][-1]-self.prices["future"][-1])
-            self.logger.info(self.prices["diff"][-1])
-            
+            self.prices["etf"][sequence_number]=((max(bid_prices)+min(ask_prices))/2)
+            if(self.prices["future"][sequence_number]!=0):
+                self.prices["diff"][sequence_number]=(self.prices["etf"][sequence_number]+self.prices["future"][sequence_number])/2
+                self.logger.info(self.prices["diff"][-1])
+            self.logger.info("etf: " + str(self.prices["etf"]))
+    def mean(lis):
+        return sum(lis)/len(lis)
 
     def on_order_filled_message(self, client_order_id: int, price: int, volume: int) -> None:
         """Called when one of your orders is filled, partially or fully.

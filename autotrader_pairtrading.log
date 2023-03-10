@@ -37441,3 +37441,8 @@ task: <Task pending name='Task-2' coro=<Subscriber._subscribe_worker() done, def
 2023-03-10 23:26:55,952 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 126
 2023-03-10 23:26:56,186 [INFO   ] [TRADER] received order book for instrument future with sequence number 402
 2023-03-10 23:26:56,186 [INFO   ] [TRADER] received order book for instrument etf with sequence number 402
+2023-03-10 23:26:56,346 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 127
+2023-03-10 23:26:56,447 [INFO   ] [TRADER] received order book for instrument future with sequence number 403
+2023-03-10 23:26:56,447 [INFO   ] [TRADER] received order book for instrument etf with sequence number 403
+2023-03-10 23:26:56,648 [INFO   ] [TRADER] received order book for instrument future with sequence number 404
+2023-03-10 23:26:56,648 [INFO   ] [TRADER] received order book for instrument etf with sequence number 404

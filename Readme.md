@@ -239,3 +239,10 @@ you cannot submit both a Python and a C++ autotrader).
 You may replace your autotrader with a new one at any time. When each
 tournament starts we'll use the autotrader in your GIT repository at the
 cut-off time for that tournament.
+
+
+python3 -m venv tradergo_venv
+
+pip3 install PySide6
+
+source tradergo_venv/bin/activate

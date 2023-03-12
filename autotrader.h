@@ -102,20 +102,19 @@ private:
     signed long mPosition = 0;
     std::unordered_set<unsigned long> mAsks;
     std::unordered_set<unsigned long> mBids;
-    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_etf_ask;
-    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_etf_bid;
-    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_future_ask;
-    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_future_bid;
 
     std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT> price_etf_ask;
     std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT> price_etf_bid;
     std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT> price_future_ask;
     std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT> price_future_bid;
-
-    bool update_etf[4000]= { 0 };
-    bool update_future[4000]= { 0 }; 
+ 
     unsigned long etf_last=-1;
     unsigned long future_last=-1;
+    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_etf_ask;
+    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_etf_bid;
+    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_future_ask;
+    // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_future_bid;
+
 };
 
 #endif //CPPREADY_TRADER_GO_AUTOTRADER_H

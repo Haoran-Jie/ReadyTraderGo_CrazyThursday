@@ -35,14 +35,6 @@ constexpr int MAX_ASK_NEAREST_TICK = MAXIMUM_ASK / TICK_SIZE_IN_CENTS * TICK_SIZ
 
 AutoTrader::AutoTrader(boost::asio::io_context& context) : BaseAutoTrader(context)
 {
-    // for(int i=0;i<4000;i++){
-    //     price_etf_ask[i][0]=-1;
-    //     price_etf_bid[i][0]=-1;
-    //     price_future_ask[i][0]=-1;
-    //     price_future_bid[i][0]=-1;
-    // }
-   
-   
 }
 
 void AutoTrader::DisconnectHandler()
@@ -94,7 +86,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
         price_future_bid=bidPrices;
         update_future[sequenceNumber]=true;
         future_last=sequenceNumber;
-        RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;
+        // RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;
         if(etf_last!=-1){ // not empty
             RLOG(LG_AT, LogLevel::LL_INFO) << "1-2";
             if (mAskId != 0 && newAskPrice != 0 && newAskPrice != mAskPrice)
@@ -109,10 +101,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             }
             unsigned long min_etf_ask=*std::min_element(price_etf_ask.begin(),price_etf_ask.end());
             unsigned long max_future_bid=*std::max_element(price_future_bid.begin(),price_future_bid.end());
-            // for (int j = 0; j < price_etf_ask.size(); j++ )
-            // {   
-            //     RLOG(LG_AT, LogLevel::LL_INFO) << "Debug: price_etf_ask "<<j<<" "<<price_etf_ask[future_last][j];
-            // }
+          
           
             RLOG(LG_AT, LogLevel::LL_INFO) << "Debug: min_etf_ask  "<<min_etf_ask;
             // Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
@@ -139,11 +128,10 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
     }
     if (instrument == Instrument::ETF)
     {
-        // std::copy_n(askPrices.begin(), askPrices.size(), price_etf_ask[sequenceNumber].begin());
-        // std::copy_n(bidPrices.begin(), bidPrices.size(), price_etf_bid[sequenceNumber].begin());
         price_etf_ask=askPrices;
         price_etf_bid=bidPrices;
-        
+         // std::copy_n(askPrices.begin(), askPrices.size(), price_etf_ask[sequenceNumber].begin());
+        // std::copy_n(bidPrices.begin(), bidPrices.size(), price_etf_bid[sequenceNumber].begin());
         update_etf[sequenceNumber]=true;
         etf_last=sequenceNumber;
         // RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;

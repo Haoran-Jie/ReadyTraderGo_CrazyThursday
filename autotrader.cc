@@ -24,6 +24,8 @@
 #include "autotrader.h"
 
 using namespace ReadyTraderGo;
+#define likely(x) __builtin_expect(!!(x), 1)
+#define unlikely(x) __builtin_expect(!!(x), 0) 
 
 RTG_INLINE_GLOBAL_LOGGER_WITH_CHANNEL(LG_AT, "AUTO")
 
@@ -87,7 +89,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
         update_future[sequenceNumber]=true;
         future_last=sequenceNumber;
         // RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;
-        if(etf_last!=-1){ // not empty
+        if(likely(etf_last!=-1)){ // not empty
             RLOG(LG_AT, LogLevel::LL_INFO) << "1-2";
             if (mAskId != 0 && newAskPrice != 0 && newAskPrice != mAskPrice)
             {
@@ -135,7 +137,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
         update_etf[sequenceNumber]=true;
         etf_last=sequenceNumber;
         // RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;
-        if(future_last!=-1){ // not empty
+        if(likely(future_last!=-1)){ // not empty
             if (mAskId != 0 && newAskPrice != 0 && newAskPrice != mAskPrice)
             {
                 SendCancelOrder(mAskId);

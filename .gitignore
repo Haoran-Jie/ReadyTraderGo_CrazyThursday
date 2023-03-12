@@ -1,9 +1,9 @@
 score_board.csv
 match_events.csv
 __pycache__/
-info.dat
 ready_trader_go/__pycache__/
 tradergo_venv/
 autotrader.log
 exchange.log
 *.log
+.DS_Store

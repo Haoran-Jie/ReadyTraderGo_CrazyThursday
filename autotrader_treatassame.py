@@ -46,12 +46,9 @@ class AutoTrader(BaseAutoTrader):
         self.order_ids = itertools.count(1)
         self.bids = set()
         self.asks = set()
-        self.sell_boundary_long = 2
-        self.sell_boundary_short = 2
-        self.buy_boundary_long = -2
-        self.buy_boundary_short = -2
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
-        self.prices = {"etf":[{}]*4000,"future":[{}]*4000}
+        self.last_etf_price = (0,0)
+        self.last_future_price = (0,0)
         self.buy_flag = self.short_flag = False
         self.future_prices = dict()
 
@@ -92,11 +89,10 @@ class AutoTrader(BaseAutoTrader):
         new_ask_price = min(ask_prices) + price_adjustment if min(ask_prices) != 0 else 0
 
         if instrument == Instrument.FUTURE:
-            self.prices["future"][sequence_number]['ask_prices']=ask_prices
-            self.prices["future"][sequence_number]['bid_prices']=bid_prices
+            self.last_future_price[0]=max(bid_prices)
+            self.last_future_price[1]=min(ask_prices)
             self.logger.info("futures: " + str(ask_prices))
-            if(self.prices["etf"][sequence_number]):
-
+            if(self.last_etf_price[0]!=0):
                 if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
                     self.send_cancel_order(self.bid_id)
                     self.bid_id = 0
@@ -106,24 +102,22 @@ class AutoTrader(BaseAutoTrader):
 
 
                 # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and min(self.prices["etf"][sequence_number]["ask_prices"])<max(self.prices["future"][sequence_number]["bid_prices"]):
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                     self.bid_id = next(self.order_ids)
                     self.bid_price = new_bid_price
                     self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.future_prices[self.bid_id]=self.prices['future'][sequence_number]
                     self.bids.add(self.bid_id)
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and min(self.prices["future"][sequence_number]["ask_prices"])<max(self.prices["etf"][sequence_number]["bid_prices"]):
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                     self.ask_id = next(self.order_ids)
                     self.ask_price = new_ask_price
                     self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.future_prices[self.ask_id]=self.prices['future'][sequence_number]
                     self.asks.add(self.ask_id)
 
         if instrument == Instrument.ETF:
-            self.prices["etf"][sequence_number]['ask_prices']=ask_prices
-            self.prices["etf"][sequence_number]['bid_prices']=bid_prices
-            if(self.prices["future"][sequence_number]):
+            self.last_etf_price[0]=max(bid_prices) 
+            self.last_etf_price[1]=min(ask_prices)
+            if(self.last_future_price[0]!=0):
                 if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
                     self.send_cancel_order(self.bid_id)
                     self.bid_id = 0
@@ -132,18 +126,16 @@ class AutoTrader(BaseAutoTrader):
                     self.ask_id = 0
 
                 # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and min(self.prices["etf"][sequence_number]["ask_prices"])<max(self.prices["future"][sequence_number]["bid_prices"]):
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                     self.bid_id = next(self.order_ids)
                     self.bid_price = new_bid_price
                     self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.future_prices[self.bid_id]=self.prices['future'][sequence_number]
                     self.bids.add(self.bid_id)
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and min(self.prices["future"][sequence_number]["ask_prices"])<max(self.prices["etf"][sequence_number]["bid_prices"]):
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                     self.ask_id = next(self.order_ids)
                     self.ask_price = new_ask_price
                     self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.future_prices[self.ask_id]=self.prices['future'][sequence_number]
                     self.asks.add(self.ask_id)
 
     def mean(lis):

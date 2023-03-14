@@ -1,8 +1,0 @@
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/CMakeFiles/autotrader.dir
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/CMakeFiles/edit_cache.dir
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/CMakeFiles/rebuild_cache.dir
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/libs/CMakeFiles/edit_cache.dir
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/libs/CMakeFiles/rebuild_cache.dir
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/libs/ready_trader_go/CMakeFiles/ready_trader_go_lib.dir
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/libs/ready_trader_go/CMakeFiles/edit_cache.dir
-/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/libs/ready_trader_go/CMakeFiles/rebuild_cache.dir

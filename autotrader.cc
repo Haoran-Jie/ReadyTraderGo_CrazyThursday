@@ -86,7 +86,6 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
     {
         price_future_ask=askPrices;
         price_future_bid=bidPrices;
-        update_future[sequenceNumber]=true;
         future_last=sequenceNumber;
         // RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;
         if(likely(etf_last!=-1)){ // not empty
@@ -134,7 +133,6 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
         price_etf_bid=bidPrices;
          // std::copy_n(askPrices.begin(), askPrices.size(), price_etf_ask[sequenceNumber].begin());
         // std::copy_n(bidPrices.begin(), bidPrices.size(), price_etf_bid[sequenceNumber].begin());
-        update_etf[sequenceNumber]=true;
         etf_last=sequenceNumber;
         // RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;
         if(likely(future_last!=-1)){ // not empty

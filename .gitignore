@@ -8,3 +8,5 @@ exchange.log
 *.log
 .DS_Store
 build/
+info.dat
+autotrader

@@ -1,5 +1,5 @@
 libs/ready_trader_go/CMakeFiles/ready_trader_go_lib.dir/connectivity.cc.o: \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/connectivity.cc \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/connectivity.cc \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cstddef \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config_site \
@@ -1160,13 +1160,13 @@ libs/ready_trader_go/CMakeFiles/ready_trader_go_lib.dir/connectivity.cc.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/mman.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/shm.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/ipc.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/connectivity.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/connectivity.h \
   /opt/homebrew/include/boost/asio/streambuf.hpp \
   /opt/homebrew/include/boost/asio/basic_streambuf.hpp \
   /opt/homebrew/include/boost/asio/basic_streambuf_fwd.hpp \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/connectivitytypes.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/error.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/logging.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/connectivitytypes.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/error.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/logging.h \
   /opt/homebrew/include/boost/log/keywords/channel.hpp \
   /opt/homebrew/include/boost/parameter/keyword.hpp \
   /opt/homebrew/include/boost/parameter/aux_/tag.hpp \

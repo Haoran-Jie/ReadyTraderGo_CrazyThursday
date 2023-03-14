@@ -1,5 +1,5 @@
 CMakeFiles/autotrader.dir/autotrader.cc.o: \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/autotrader.cc \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/autotrader.cc \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/array \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config_site \
@@ -702,7 +702,7 @@ CMakeFiles/autotrader.dir/autotrader.cc.o: \
   /opt/homebrew/include/boost/asio/impl/system_context.ipp \
   /opt/homebrew/include/boost/asio/executor_work_guard.hpp \
   /opt/homebrew/include/boost/asio/impl/io_context.ipp \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/logging.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/logging.h \
   /opt/homebrew/include/boost/log/keywords/channel.hpp \
   /opt/homebrew/include/boost/parameter/keyword.hpp \
   /opt/homebrew/include/boost/parameter/aux_/tag.hpp \
@@ -1182,12 +1182,12 @@ CMakeFiles/autotrader.dir/autotrader.cc.o: \
   /opt/homebrew/include/boost/log/keywords/severity.hpp \
   /opt/homebrew/include/boost/log/sources/channel_feature.hpp \
   /opt/homebrew/include/boost/log/attributes/mutable_constant.hpp \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/autotrader.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/autotrader.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/unordered_set \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/is_transparent.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__hash_table \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__node_handle \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/baseautotrader.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/connectivitytypes.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/protocol.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/types.h
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/baseautotrader.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/connectivitytypes.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/protocol.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/types.h

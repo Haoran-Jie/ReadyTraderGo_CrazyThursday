@@ -1,4 +1,4 @@
-# Install script for directory: /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs
+# Install script for directory: /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/build/libs/ready_trader_go/cmake_install.cmake")
+  include("/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/build/libs/ready_trader_go/cmake_install.cmake")
 
 endif()
 

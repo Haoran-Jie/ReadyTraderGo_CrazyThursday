@@ -1,5 +1,5 @@
 CMakeFiles/autotrader.dir/main.cc.o: \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/main.cc \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/main.cc \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cstdlib \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config_site \
@@ -414,7 +414,7 @@ CMakeFiles/autotrader.dir/main.cc.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/application.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/application.h \
   /opt/homebrew/include/boost/asio/io_context.hpp \
   /opt/homebrew/include/boost/asio/detail/config.hpp \
   /opt/homebrew/include/boost/config.hpp \
@@ -2309,13 +2309,13 @@ CMakeFiles/autotrader.dir/main.cc.o: \
   /opt/homebrew/include/boost/multi_index/detail/duplicates_iterator.hpp \
   /opt/homebrew/include/boost/multi_index/member.hpp \
   /opt/homebrew/include/boost/property_tree/detail/ptree_implementation.hpp \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/autotraderapphandler.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/baseautotrader.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/autotraderapphandler.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/baseautotrader.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/array \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/connectivitytypes.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/protocol.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/types.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/connectivity.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/connectivitytypes.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/protocol.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/types.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/connectivity.h \
   /opt/homebrew/include/boost/asio/ip/tcp.hpp \
   /opt/homebrew/include/boost/asio/basic_socket_acceptor.hpp \
   /opt/homebrew/include/boost/asio/basic_socket.hpp \
@@ -2437,7 +2437,7 @@ CMakeFiles/autotrader.dir/main.cc.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/mman.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/shm.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/ipc.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/error.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/autotrader.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/error.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/autotrader.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/unordered_set \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__hash_table

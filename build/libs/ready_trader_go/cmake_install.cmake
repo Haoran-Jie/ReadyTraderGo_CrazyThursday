@@ -1,4 +1,4 @@
-# Install script for directory: /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go
+# Install script for directory: /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

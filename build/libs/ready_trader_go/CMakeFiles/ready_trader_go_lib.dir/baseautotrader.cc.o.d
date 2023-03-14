@@ -1,6 +1,6 @@
 libs/ready_trader_go/CMakeFiles/ready_trader_go_lib.dir/baseautotrader.cc.o: \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/baseautotrader.cc \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/baseautotrader.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/baseautotrader.cc \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/baseautotrader.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/array \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config_site \
@@ -703,11 +703,11 @@ libs/ready_trader_go/CMakeFiles/ready_trader_go_lib.dir/baseautotrader.cc.o: \
   /opt/homebrew/include/boost/asio/impl/system_context.ipp \
   /opt/homebrew/include/boost/asio/executor_work_guard.hpp \
   /opt/homebrew/include/boost/asio/impl/io_context.ipp \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/connectivitytypes.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/protocol.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/types.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/error.h \
-  /Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/logging.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/connectivitytypes.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/protocol.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/types.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/error.h \
+  /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/logging.h \
   /opt/homebrew/include/boost/log/keywords/channel.hpp \
   /opt/homebrew/include/boost/parameter/keyword.hpp \
   /opt/homebrew/include/boost/parameter/aux_/tag.hpp \

@@ -7,12 +7,12 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/CMakeLists.txt"
+  "/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/CMakeLists.txt"
   "CMakeFiles/3.25.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.25.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.25.3/CMakeSystem.cmake"
-  "/Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/CMakeLists.txt"
-  "/Users/peterhu/Documents/Coding/GitHub/Optiver_Go/cppready_trader_go/libs/ready_trader_go/CMakeLists.txt"
+  "/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/CMakeLists.txt"
+  "/Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/libs/ready_trader_go/CMakeLists.txt"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CMakeCCompiler.cmake.in"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CMakeCCompilerABI.c"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CMakeCInformation.cmake"
@@ -42,6 +42,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CMakeTestCCompiler.cmake"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CMakeTestCXXCompiler.cmake"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CMakeTestCompilerCommon.cmake"
+  "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CMakeUnixFindMake.cmake"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CheckCSourceCompiles.cmake"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CheckIncludeFile.cmake"
   "/opt/homebrew/Cellar/cmake/3.25.3/share/cmake/Modules/CheckLibraryExists.cmake"

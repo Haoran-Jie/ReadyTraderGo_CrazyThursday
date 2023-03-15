@@ -545,3 +545,503 @@
 2023-03-10 20:57:12,102 [INFO   ] [APP] closing event loop
 2023-03-10 20:57:12,114 [ERROR  ] [asyncio] Task was destroyed but it is pending!
 task: <Task pending name='Task-2' coro=<Subscriber._subscribe_worker() done, defined at /Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/ready_trader_go/pubsub.py:122> cb=[MmapSubscriber.__init__.<locals>.<lambda>() at /Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/ready_trader_go/pubsub.py:176]>
+2023-03-15 00:30:16,625 [INFO   ] [APP] autotrader_movingAverage started with arguments={rtg.py, run, autotrader_movingAverage.py, autotrader_volAve.py}
+2023-03-15 00:30:16,625 [INFO   ] [APP] configuration={"Execution":{"Host":"127.0.0.1","Port":12345},"Information":{"Type":"mmap","Name":"info.dat"},"TeamName":"CrazyThursday_Samuel","Secret":"fengkuangxingqisi"}
+2023-03-15 00:30:16,627 [INFO   ] [CONNECTION] fd=16 connection established: peer=127.0.0.1:12345
+2023-03-15 00:30:21,143 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 1
+2023-03-15 00:30:21,143 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:21,143 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:21,143 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 1
+2023-03-15 00:30:21,143 [INFO   ] [TRADER] received order status for order 1 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:21,143 [INFO   ] [TRADER] received order status for order 2 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:21,369 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 2
+2023-03-15 00:30:21,369 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:21,369 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 2
+2023-03-15 00:30:21,370 [INFO   ] [TRADER] received order status for order 1 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:21,370 [INFO   ] [TRADER] received order status for order 3 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:21,689 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 3
+2023-03-15 00:30:21,689 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:21,689 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 3
+2023-03-15 00:30:21,689 [INFO   ] [TRADER] received order status for order 3 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:21,689 [INFO   ] [TRADER] received order status for order 4 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:21,876 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 4
+2023-03-15 00:30:21,876 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:21,876 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 4
+2023-03-15 00:30:21,876 [INFO   ] [TRADER] received order status for order 4 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:21,876 [INFO   ] [TRADER] received order status for order 5 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:21,935 [INFO   ] [TRADER] received order filled for order 2 with price 147100 and volume 10
+2023-03-15 00:30:21,935 [INFO   ] [TRADER] received order status for order 2 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:21,935 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 2
+2023-03-15 00:30:21,935 [INFO   ] [TRADER] received hedge filled for order 6 with average price 147100 and volume 10
+2023-03-15 00:30:22,114 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 5
+2023-03-15 00:30:22,114 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:22,114 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:22,114 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 5
+2023-03-15 00:30:22,115 [INFO   ] [TRADER] received order status for order 5 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:22,115 [INFO   ] [TRADER] received order status for order 7 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:22,116 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 2
+2023-03-15 00:30:22,116 [INFO   ] [TRADER] received order status for order 8 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:22,200 [INFO   ] [TRADER] received order filled for order 7 with price 147100 and volume 1
+2023-03-15 00:30:22,200 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 3
+2023-03-15 00:30:22,200 [INFO   ] [TRADER] received order status for order 7 with fill volume 1 remaining 9 and fees -15
+2023-03-15 00:30:22,200 [INFO   ] [TRADER] received hedge filled for order 9 with average price 147100 and volume 1
+2023-03-15 00:30:22,404 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 6
+2023-03-15 00:30:22,404 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:22,404 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 6
+2023-03-15 00:30:22,405 [INFO   ] [TRADER] received order status for order 8 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:22,405 [INFO   ] [TRADER] received order status for order 10 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:22,594 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 7
+2023-03-15 00:30:22,594 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 7
+2023-03-15 00:30:22,853 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 8
+2023-03-15 00:30:22,853 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:22,853 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 8
+2023-03-15 00:30:22,853 [INFO   ] [TRADER] received order status for order 10 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:22,853 [INFO   ] [TRADER] received order status for order 11 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:23,117 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 9
+2023-03-15 00:30:23,117 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 9
+2023-03-15 00:30:23,146 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 3
+2023-03-15 00:30:23,300 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 4
+2023-03-15 00:30:23,377 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 10
+2023-03-15 00:30:23,377 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:23,377 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 10
+2023-03-15 00:30:23,377 [INFO   ] [TRADER] received order status for order 7 with fill volume 1 remaining 0 and fees -15
+2023-03-15 00:30:23,377 [INFO   ] [TRADER] received order status for order 12 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:23,633 [INFO   ] [TRADER] received order filled for order 12 with price 147000 and volume 10
+2023-03-15 00:30:23,633 [INFO   ] [TRADER] received order status for order 12 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:23,633 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 4
+2023-03-15 00:30:23,633 [INFO   ] [TRADER] received hedge filled for order 13 with average price 146800 and volume 10
+2023-03-15 00:30:23,639 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 11
+2023-03-15 00:30:23,639 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:23,639 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:23,639 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 11
+2023-03-15 00:30:23,639 [INFO   ] [TRADER] received order status for order 11 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:23,639 [INFO   ] [TRADER] received order status for order 14 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:23,639 [INFO   ] [TRADER] received order status for order 15 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:23,863 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 12
+2023-03-15 00:30:23,863 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:23,863 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 12
+2023-03-15 00:30:23,863 [INFO   ] [TRADER] received order status for order 14 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:23,863 [INFO   ] [TRADER] received order status for order 16 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:24,134 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 13
+2023-03-15 00:30:24,134 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 13
+2023-03-15 00:30:24,433 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 14
+2023-03-15 00:30:24,433 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:24,433 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 14
+2023-03-15 00:30:24,434 [INFO   ] [TRADER] received order status for order 16 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:24,434 [INFO   ] [TRADER] received order status for order 17 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:24,536 [INFO   ] [TRADER] received order filled for order 15 with price 147000 and volume 10
+2023-03-15 00:30:24,536 [INFO   ] [TRADER] received order status for order 15 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:24,536 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 5
+2023-03-15 00:30:24,536 [INFO   ] [TRADER] received hedge filled for order 18 with average price 147000 and volume 10
+2023-03-15 00:30:24,629 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 15
+2023-03-15 00:30:24,629 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:24,629 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 15
+2023-03-15 00:30:24,630 [INFO   ] [TRADER] received order status for order 19 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:24,786 [INFO   ] [TRADER] received order filled for order 17 with price 146900 and volume 7
+2023-03-15 00:30:24,786 [INFO   ] [TRADER] received order status for order 17 with fill volume 7 remaining 3 and fees -103
+2023-03-15 00:30:24,786 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 6
+2023-03-15 00:30:24,786 [INFO   ] [TRADER] received hedge filled for order 20 with average price 146800 and volume 7
+2023-03-15 00:30:24,934 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 16
+2023-03-15 00:30:24,934 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:24,934 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 16
+2023-03-15 00:30:24,935 [INFO   ] [TRADER] received order status for order 17 with fill volume 7 remaining 0 and fees -103
+2023-03-15 00:30:24,935 [INFO   ] [TRADER] received order status for order 21 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:25,136 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 17
+2023-03-15 00:30:25,136 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:25,136 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 17
+2023-03-15 00:30:25,137 [INFO   ] [TRADER] received order status for order 21 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:25,137 [INFO   ] [TRADER] received order status for order 22 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:25,365 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 18
+2023-03-15 00:30:25,365 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 18
+2023-03-15 00:30:25,640 [INFO   ] [TRADER] received order filled for order 22 with price 146900 and volume 10
+2023-03-15 00:30:25,640 [INFO   ] [TRADER] received order status for order 22 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:25,640 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 7
+2023-03-15 00:30:25,640 [INFO   ] [TRADER] received hedge filled for order 23 with average price 146800 and volume 10
+2023-03-15 00:30:25,685 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 19
+2023-03-15 00:30:25,685 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:25,685 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:25,685 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 19
+2023-03-15 00:30:25,686 [INFO   ] [TRADER] received order status for order 19 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:25,686 [INFO   ] [TRADER] received order status for order 24 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:25,686 [INFO   ] [TRADER] received order status for order 25 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:25,859 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 20
+2023-03-15 00:30:25,859 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:25,859 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:25,859 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 20
+2023-03-15 00:30:25,859 [INFO   ] [TRADER] received order status for order 24 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:25,860 [INFO   ] [TRADER] received order status for order 25 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:25,860 [INFO   ] [TRADER] received order status for order 26 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:25,860 [INFO   ] [TRADER] received order filled for order 27 with price 146800 and volume 1
+2023-03-15 00:30:25,860 [INFO   ] [TRADER] received order status for order 27 with fill volume 1 remaining 9 and fees 29
+2023-03-15 00:30:25,860 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 8
+2023-03-15 00:30:25,860 [INFO   ] [TRADER] received hedge filled for order 28 with average price 146800 and volume 1
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 21
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 21
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received order status for order 26 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received order status for order 29 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received order filled for order 29 with price 146700 and volume 10
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 9
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received order status for order 29 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:26,140 [INFO   ] [TRADER] received hedge filled for order 30 with average price 146700 and volume 10
+2023-03-15 00:30:26,340 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 5
+2023-03-15 00:30:26,432 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 22
+2023-03-15 00:30:26,432 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:26,432 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:26,432 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 22
+2023-03-15 00:30:26,432 [INFO   ] [TRADER] received order status for order 27 with fill volume 1 remaining 0 and fees 29
+2023-03-15 00:30:26,432 [INFO   ] [TRADER] received order status for order 31 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:26,432 [INFO   ] [TRADER] received order status for order 32 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 23
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 23
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received order filled for order 32 with price 146900 and volume 10
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received order status for order 32 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 10
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received order status for order 31 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received order status for order 33 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received order status for order 34 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:26,652 [INFO   ] [TRADER] received hedge filled for order 35 with average price 147200 and volume 10
+2023-03-15 00:30:26,861 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 24
+2023-03-15 00:30:26,861 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:26,861 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:26,861 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 24
+2023-03-15 00:30:26,862 [INFO   ] [TRADER] received order status for order 33 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:26,862 [INFO   ] [TRADER] received order status for order 34 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:26,862 [INFO   ] [TRADER] received order status for order 36 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:26,862 [INFO   ] [TRADER] received order filled for order 37 with price 147000 and volume 10
+2023-03-15 00:30:26,862 [INFO   ] [TRADER] received order status for order 37 with fill volume 10 remaining 0 and fees 294
+2023-03-15 00:30:26,862 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 11
+2023-03-15 00:30:26,862 [INFO   ] [TRADER] received hedge filled for order 38 with average price 147000 and volume 10
+2023-03-15 00:30:27,135 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 25
+2023-03-15 00:30:27,135 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:27,135 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:27,135 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 25
+2023-03-15 00:30:27,136 [INFO   ] [TRADER] received order status for order 36 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:27,136 [INFO   ] [TRADER] received order status for order 39 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:27,136 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 12
+2023-03-15 00:30:27,136 [INFO   ] [TRADER] received order status for order 40 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:27,188 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 6
+2023-03-15 00:30:27,401 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 26
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 26
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received order status for order 39 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received order status for order 40 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received order status for order 41 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received order filled for order 42 with price 147000 and volume 10
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 13
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received order status for order 42 with fill volume 10 remaining 0 and fees 294
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 14
+2023-03-15 00:30:27,402 [INFO   ] [TRADER] received hedge filled for order 43 with average price 146700 and volume 10
+2023-03-15 00:30:27,610 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 27
+2023-03-15 00:30:27,610 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:27,610 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:27,610 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 27
+2023-03-15 00:30:27,610 [INFO   ] [TRADER] received order status for order 41 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:27,611 [INFO   ] [TRADER] received order status for order 44 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:27,611 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 15
+2023-03-15 00:30:27,611 [INFO   ] [TRADER] received order filled for order 45 with price 147000 and volume 10
+2023-03-15 00:30:27,611 [INFO   ] [TRADER] received order status for order 45 with fill volume 10 remaining 0 and fees 294
+2023-03-15 00:30:27,611 [INFO   ] [TRADER] received hedge filled for order 46 with average price 146700 and volume 10
+2023-03-15 00:30:27,750 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 16
+2023-03-15 00:30:27,784 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 7
+2023-03-15 00:30:27,920 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 28
+2023-03-15 00:30:27,920 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:27,920 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:27,920 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 28
+2023-03-15 00:30:27,920 [INFO   ] [TRADER] received order status for order 44 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:27,920 [INFO   ] [TRADER] received order status for order 47 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:27,921 [INFO   ] [TRADER] received order status for order 48 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:28,090 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 8
+2023-03-15 00:30:28,141 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 29
+2023-03-15 00:30:28,141 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:28,141 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:28,141 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 29
+2023-03-15 00:30:28,142 [INFO   ] [TRADER] received order filled for order 48 with price 147200 and volume 10
+2023-03-15 00:30:28,142 [INFO   ] [TRADER] received order status for order 48 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:28,142 [INFO   ] [TRADER] received order status for order 47 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:28,143 [INFO   ] [TRADER] received order status for order 49 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:28,143 [INFO   ] [TRADER] received order status for order 50 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:28,143 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 17
+2023-03-15 00:30:28,143 [INFO   ] [TRADER] received hedge filled for order 51 with average price 147100 and volume 10
+2023-03-15 00:30:28,395 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 30
+2023-03-15 00:30:28,395 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 30
+2023-03-15 00:30:28,396 [INFO   ] [TRADER] received order filled for order 49 with price 147200 and volume 10
+2023-03-15 00:30:28,396 [INFO   ] [TRADER] received order status for order 49 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:28,396 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 18
+2023-03-15 00:30:28,396 [INFO   ] [TRADER] received hedge filled for order 52 with average price 146800 and volume 10
+2023-03-15 00:30:28,674 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 31
+2023-03-15 00:30:28,674 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:28,674 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 31
+2023-03-15 00:30:28,674 [INFO   ] [TRADER] received order status for order 53 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:28,882 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 32
+2023-03-15 00:30:28,882 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:28,882 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 32
+2023-03-15 00:30:28,882 [INFO   ] [TRADER] received order status for order 50 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:28,882 [INFO   ] [TRADER] received order status for order 54 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:29,118 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 33
+2023-03-15 00:30:29,118 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 33
+2023-03-15 00:30:29,298 [INFO   ] [TRADER] received order filled for order 53 with price 147100 and volume 10
+2023-03-15 00:30:29,298 [INFO   ] [TRADER] received order status for order 53 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:29,298 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 19
+2023-03-15 00:30:29,298 [INFO   ] [TRADER] received hedge filled for order 55 with average price 146800 and volume 10
+2023-03-15 00:30:29,377 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 34
+2023-03-15 00:30:29,377 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:29,377 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:29,377 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 34
+2023-03-15 00:30:29,377 [INFO   ] [TRADER] received order status for order 54 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:29,377 [INFO   ] [TRADER] received order status for order 56 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:29,377 [INFO   ] [TRADER] received order status for order 57 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:29,639 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 35
+2023-03-15 00:30:29,639 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 35
+2023-03-15 00:30:29,867 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 36
+2023-03-15 00:30:29,867 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:29,867 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:29,867 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 36
+2023-03-15 00:30:29,868 [INFO   ] [TRADER] received order status for order 56 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:29,868 [INFO   ] [TRADER] received order status for order 57 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:29,868 [INFO   ] [TRADER] received order status for order 58 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:29,868 [INFO   ] [TRADER] received order status for order 59 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:30,042 [INFO   ] [TRADER] received order filled for order 58 with price 146900 and volume 10
+2023-03-15 00:30:30,042 [INFO   ] [TRADER] received order status for order 58 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:30,042 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 20
+2023-03-15 00:30:30,043 [INFO   ] [TRADER] received hedge filled for order 60 with average price 146700 and volume 10
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 37
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 37
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 21
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received order status for order 59 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received order filled for order 61 with price 146400 and volume 10
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received order status for order 61 with fill volume 10 remaining 0 and fees 293
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received order status for order 62 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 22
+2023-03-15 00:30:30,151 [INFO   ] [TRADER] received hedge filled for order 63 with average price 146700 and volume 10
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 38
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 38
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] received order status for order 62 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] received order filled for order 64 with price 146400 and volume 10
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] received order status for order 64 with fill volume 10 remaining 0 and fees 293
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 23
+2023-03-15 00:30:30,394 [INFO   ] [TRADER] received order status for order 65 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:30,395 [INFO   ] [TRADER] received hedge filled for order 66 with average price 146700 and volume 10
+2023-03-15 00:30:30,679 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 39
+2023-03-15 00:30:30,679 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:30,679 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:30,679 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 39
+2023-03-15 00:30:30,680 [INFO   ] [TRADER] received order status for order 65 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:30,680 [INFO   ] [TRADER] received order filled for order 67 with price 146400 and volume 10
+2023-03-15 00:30:30,680 [INFO   ] [TRADER] received order status for order 67 with fill volume 10 remaining 0 and fees 293
+2023-03-15 00:30:30,680 [INFO   ] [TRADER] received order status for order 68 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:30,680 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 24
+2023-03-15 00:30:30,681 [INFO   ] [TRADER] received hedge filled for order 69 with average price 146500 and volume 10
+2023-03-15 00:30:30,932 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 40
+2023-03-15 00:30:30,932 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:30,932 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:30,932 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 40
+2023-03-15 00:30:30,932 [INFO   ] [TRADER] received order status for order 68 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:30,932 [INFO   ] [TRADER] received order status for order 70 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:30,932 [INFO   ] [TRADER] received order status for order 71 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 41
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 41
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received order status for order 70 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received order status for order 71 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received order filled for order 72 with price 146400 and volume 10
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 25
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received order status for order 72 with fill volume 10 remaining 0 and fees 293
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received order status for order 73 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:31,118 [INFO   ] [TRADER] received hedge filled for order 74 with average price 146600 and volume 10
+2023-03-15 00:30:31,408 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 42
+2023-03-15 00:30:31,409 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:31,409 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 42
+2023-03-15 00:30:31,409 [INFO   ] [TRADER] received order filled for order 75 with price 146400 and volume 10
+2023-03-15 00:30:31,409 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 26
+2023-03-15 00:30:31,409 [INFO   ] [TRADER] received order status for order 75 with fill volume 10 remaining 0 and fees 293
+2023-03-15 00:30:31,409 [INFO   ] [TRADER] received hedge filled for order 76 with average price 146800 and volume 10
+2023-03-15 00:30:31,618 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 43
+2023-03-15 00:30:31,618 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:31,618 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:31,618 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 43
+2023-03-15 00:30:31,619 [INFO   ] [TRADER] received order status for order 73 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:31,619 [INFO   ] [TRADER] received order status for order 77 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:31,619 [INFO   ] [TRADER] received order status for order 78 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:31,633 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 9
+2023-03-15 00:30:31,792 [INFO   ] [TRADER] received order filled for order 77 with price 146400 and volume 2
+2023-03-15 00:30:31,792 [INFO   ] [TRADER] received order status for order 77 with fill volume 2 remaining 8 and fees -29
+2023-03-15 00:30:31,792 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 27
+2023-03-15 00:30:31,792 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 10
+2023-03-15 00:30:31,792 [INFO   ] [TRADER] received hedge filled for order 79 with average price 146800 and volume 2
+2023-03-15 00:30:31,892 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 44
+2023-03-15 00:30:31,892 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:31,892 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:31,892 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 44
+2023-03-15 00:30:31,892 [INFO   ] [TRADER] received order filled for order 78 with price 146500 and volume 10
+2023-03-15 00:30:31,892 [INFO   ] [TRADER] received order status for order 78 with fill volume 10 remaining 0 and fees -146
+2023-03-15 00:30:31,893 [INFO   ] [TRADER] received order status for order 77 with fill volume 2 remaining 0 and fees -29
+2023-03-15 00:30:31,893 [INFO   ] [TRADER] received order status for order 80 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:31,893 [INFO   ] [TRADER] received order status for order 81 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:31,893 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 28
+2023-03-15 00:30:31,893 [INFO   ] [TRADER] received hedge filled for order 82 with average price 147200 and volume 10
+2023-03-15 00:30:31,931 [INFO   ] [TRADER] received order filled for order 81 with price 146800 and volume 10
+2023-03-15 00:30:31,931 [INFO   ] [TRADER] received order status for order 81 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:31,931 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 29
+2023-03-15 00:30:31,931 [INFO   ] [TRADER] received hedge filled for order 83 with average price 147200 and volume 10
+2023-03-15 00:30:32,160 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 45
+2023-03-15 00:30:32,160 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:32,160 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:32,160 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 45
+2023-03-15 00:30:32,161 [INFO   ] [TRADER] received order status for order 80 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:32,161 [INFO   ] [TRADER] received order status for order 84 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:32,161 [INFO   ] [TRADER] received order status for order 85 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:32,349 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 46
+2023-03-15 00:30:32,349 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 46
+2023-03-15 00:30:32,613 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 47
+2023-03-15 00:30:32,613 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:32,613 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 47
+2023-03-15 00:30:32,614 [INFO   ] [TRADER] received order status for order 84 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:32,614 [INFO   ] [TRADER] received order filled for order 86 with price 146900 and volume 10
+2023-03-15 00:30:32,614 [INFO   ] [TRADER] received order status for order 86 with fill volume 10 remaining 0 and fees 294
+2023-03-15 00:30:32,614 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 30
+2023-03-15 00:30:32,614 [INFO   ] [TRADER] received hedge filled for order 87 with average price 147100 and volume 10
+2023-03-15 00:30:32,741 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 11
+2023-03-15 00:30:32,852 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 48
+2023-03-15 00:30:32,852 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:32,852 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:32,852 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 48
+2023-03-15 00:30:32,852 [INFO   ] [TRADER] received order status for order 85 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:32,852 [INFO   ] [TRADER] received order status for order 88 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:32,852 [INFO   ] [TRADER] received order status for order 89 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:32,895 [INFO   ] [TRADER] received order filled for order 89 with price 146900 and volume 10
+2023-03-15 00:30:32,895 [INFO   ] [TRADER] received order status for order 89 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:32,895 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 31
+2023-03-15 00:30:32,896 [INFO   ] [TRADER] received hedge filled for order 90 with average price 147100 and volume 10
+2023-03-15 00:30:33,165 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 49
+2023-03-15 00:30:33,165 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:33,165 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 49
+2023-03-15 00:30:33,165 [INFO   ] [TRADER] received order status for order 91 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:33,421 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 50
+2023-03-15 00:30:33,421 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 50
+2023-03-15 00:30:33,691 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 51
+2023-03-15 00:30:33,691 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 51
+2023-03-15 00:30:33,870 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 52
+2023-03-15 00:30:33,870 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 52
+2023-03-15 00:30:34,170 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 53
+2023-03-15 00:30:34,170 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 53
+2023-03-15 00:30:34,283 [INFO   ] [TRADER] received order filled for order 88 with price 146700 and volume 10
+2023-03-15 00:30:34,283 [INFO   ] [TRADER] received order status for order 88 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:34,283 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 32
+2023-03-15 00:30:34,284 [INFO   ] [TRADER] received hedge filled for order 92 with average price 146900 and volume 10
+2023-03-15 00:30:34,405 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 54
+2023-03-15 00:30:34,406 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:34,406 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:34,406 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 54
+2023-03-15 00:30:34,406 [INFO   ] [TRADER] received order status for order 91 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:34,406 [INFO   ] [TRADER] received order status for order 93 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:34,406 [INFO   ] [TRADER] received order status for order 94 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:34,640 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 55
+2023-03-15 00:30:34,640 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 55
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 56
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 56
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received order status for order 93 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received order status for order 94 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received order status for order 95 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received order filled for order 96 with price 146700 and volume 10
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received order status for order 96 with fill volume 10 remaining 0 and fees 293
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 33
+2023-03-15 00:30:34,891 [INFO   ] [TRADER] received hedge filled for order 97 with average price 147000 and volume 10
+2023-03-15 00:30:35,169 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 57
+2023-03-15 00:30:35,169 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:35,169 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:35,169 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 57
+2023-03-15 00:30:35,170 [INFO   ] [TRADER] received order status for order 95 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:35,170 [INFO   ] [TRADER] received order status for order 98 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:35,170 [INFO   ] [TRADER] received order status for order 99 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:35,336 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 12
+2023-03-15 00:30:35,442 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 58
+2023-03-15 00:30:35,442 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:35,442 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:35,442 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 58
+2023-03-15 00:30:35,443 [INFO   ] [TRADER] received order status for order 98 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:35,443 [INFO   ] [TRADER] received order status for order 99 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:35,443 [INFO   ] [TRADER] received order status for order 100 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:35,443 [INFO   ] [TRADER] received order status for order 101 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:35,626 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 59
+2023-03-15 00:30:35,626 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:35,626 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:35,626 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 59
+2023-03-15 00:30:35,627 [INFO   ] [TRADER] received order status for order 100 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:35,627 [INFO   ] [TRADER] received order status for order 101 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:35,627 [INFO   ] [TRADER] received order status for order 102 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:35,627 [INFO   ] [TRADER] received order status for order 103 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:35,933 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 60
+2023-03-15 00:30:35,934 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 60
+2023-03-15 00:30:36,094 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 61
+2023-03-15 00:30:36,094 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:36,094 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 61
+2023-03-15 00:30:36,094 [INFO   ] [TRADER] received order status for order 102 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:36,094 [INFO   ] [TRADER] received order status for order 104 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:36,404 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 62
+2023-03-15 00:30:36,404 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:36,404 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:36,404 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 62
+2023-03-15 00:30:36,405 [INFO   ] [TRADER] received order filled for order 104 with price 146800 and volume 10
+2023-03-15 00:30:36,405 [INFO   ] [TRADER] received order status for order 104 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:36,405 [INFO   ] [TRADER] received order status for order 103 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:36,405 [INFO   ] [TRADER] received order status for order 105 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:36,405 [INFO   ] [TRADER] received order status for order 106 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:36,405 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 34
+2023-03-15 00:30:36,405 [INFO   ] [TRADER] received hedge filled for order 107 with average price 146900 and volume 10
+2023-03-15 00:30:36,491 [INFO   ] [TRADER] received order filled for order 106 with price 146800 and volume 10
+2023-03-15 00:30:36,492 [INFO   ] [TRADER] received order status for order 106 with fill volume 10 remaining 0 and fees -147
+2023-03-15 00:30:36,492 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 35
+2023-03-15 00:30:36,492 [INFO   ] [TRADER] received hedge filled for order 108 with average price 147000 and volume 10
+2023-03-15 00:30:36,588 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 13
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 63
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 63
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received order status for order 105 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received order status for order 109 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received order filled for order 110 with price 146700 and volume 7
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received order status for order 110 with fill volume 7 remaining 3 and fees 205
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 36
+2023-03-15 00:30:36,675 [INFO   ] [TRADER] received hedge filled for order 111 with average price 146900 and volume 7
+2023-03-15 00:30:36,868 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 64
+2023-03-15 00:30:36,868 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 64
+2023-03-15 00:30:36,942 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 14
+2023-03-15 00:30:36,985 [INFO   ] [TRADER] received order filled for order 110 with price 146700 and volume 3
+2023-03-15 00:30:36,986 [INFO   ] [TRADER] received order status for order 110 with fill volume 10 remaining 0 and fees 161
+2023-03-15 00:30:36,986 [INFO   ] [TRADER] received trade ticks for instrument 1 with sequence number 37
+2023-03-15 00:30:36,986 [INFO   ] [TRADER] received hedge filled for order 112 with average price 147100 and volume 3
+2023-03-15 00:30:37,088 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 15
+2023-03-15 00:30:37,179 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 65
+2023-03-15 00:30:37,179 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:37,179 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 65
+2023-03-15 00:30:37,179 [INFO   ] [TRADER] received order status for order 113 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:37,359 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 66
+2023-03-15 00:30:37,359 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 66
+2023-03-15 00:30:37,660 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 67
+2023-03-15 00:30:37,660 [INFO   ] [TRADER] inserted bid order
+2023-03-15 00:30:37,660 [INFO   ] [TRADER] inserted ask order
+2023-03-15 00:30:37,660 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 67
+2023-03-15 00:30:37,661 [INFO   ] [TRADER] received order status for order 109 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:37,661 [INFO   ] [TRADER] received order status for order 113 with fill volume 0 remaining 0 and fees 0
+2023-03-15 00:30:37,661 [INFO   ] [TRADER] received order status for order 114 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:37,661 [INFO   ] [TRADER] received order status for order 115 with fill volume 0 remaining 10 and fees 0
+2023-03-15 00:30:37,938 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 68
+2023-03-15 00:30:37,938 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 68
+2023-03-15 00:30:38,037 [INFO   ] [TRADER] received trade ticks for instrument 0 with sequence number 16
+2023-03-15 00:30:38,111 [INFO   ] [TRADER] received order book for instrument 0 with sequence number 69
+2023-03-15 00:30:38,111 [INFO   ] [TRADER] received order book for instrument 1 with sequence number 69
+2023-03-15 00:30:38,293 [INFO   ] [APP] SIGTERM signal received - shutting down...
+2023-03-15 00:30:38,293 [INFO   ] [APP] closing event loop
+2023-03-15 00:30:38,309 [ERROR  ] [asyncio] Task was destroyed but it is pending!
+task: <Task pending name='Task-2' coro=<Subscriber._subscribe_worker() done, defined at /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/ready_trader_go/pubsub.py:122> cb=[MmapSubscriber.__init__.<locals>.<lambda>() at /Users/peterhu/Documents/Coding/GitHub/ReadyTraderGo_CrazyThursday/ready_trader_go/pubsub.py:176]>

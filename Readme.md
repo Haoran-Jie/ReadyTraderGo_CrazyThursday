@@ -252,4 +252,6 @@ pip3 install numpy
 source tradergo_venv/bin/activate
 
 python3 rtg.py run autotrader_pairtrading.py
+
+python3 rtg.py run autotrader_movingAverage.py autotrader_volAve.py
 ```

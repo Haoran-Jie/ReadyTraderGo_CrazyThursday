@@ -238,7 +238,7 @@ class AutoTrader(BaseAutoTrader):
 
         If an order is cancelled its remaining volume will be zero.
         """
-        self.logger.info("received order status for order %d with fill volume %d remaining %d and fees %d",
+        self.logger.info("received order status for %s order %d with fill volume %d remaining %d and fees %d","bid" if client_order_id in self.bids else "ask",
                          client_order_id, fill_volume, remaining_volume, fees)
         # An order is cancelled
         if remaining_volume == 0:
@@ -246,7 +246,8 @@ class AutoTrader(BaseAutoTrader):
                 self.bid_id = 0
             elif client_order_id == self.ask_id:
                 self.ask_id = 0
-            self.timestamps.append(time.time())
+            if fill_volume == 0:
+                self.timestamps.append(time.time())
             # It could be either a bid or an ask
             self.bids.discard(client_order_id)
             self.asks.discard(client_order_id)

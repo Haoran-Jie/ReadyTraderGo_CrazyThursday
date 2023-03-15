@@ -18,7 +18,6 @@
 import asyncio
 import itertools
 import time
-import numpy as np
 from typing import List
 from collections import deque
 

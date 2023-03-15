@@ -17,12 +17,14 @@
 #     <https://www.gnu.org/licenses/>.
 import asyncio
 import itertools
+import time
 import numpy as np
 from typing import List
+from collections import deque
 
 from ready_trader_go import BaseAutoTrader, Instrument, Lifespan, MAXIMUM_ASK, MINIMUM_BID, Side
 
-
+INTERVAL = 1
 LOT_SIZE = 10
 POSITION_LIMIT = 100
 TICK_SIZE_IN_CENTS = 100
@@ -47,10 +49,12 @@ class AutoTrader(BaseAutoTrader):
         self.bids = set()
         self.asks = set()
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
-        self.last_etf_price = (0,0)
-        self.last_future_price = (0,0)
-        self.buy_flag = self.short_flag = False
-        self.future_prices = dict()
+        self.last_etf_price = [0,0]
+        self.last_future_price = [0,0]
+        self.last_etf_volume = [0,0]
+        self.last_future_volume = [0,0]
+        self.last_sequence_number = 0
+        self.timestamps = deque()
 
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
@@ -68,8 +72,8 @@ class AutoTrader(BaseAutoTrader):
         The price is the average price at which the order was (partially) filled,
         which may be better than the order's limit price. The volume is
         the number of lots filled at that price.
-        hi
         """
+
         self.logger.info("received hedge filled for order %d with average price %d and volume %d", client_order_id,
                          price, volume)
 
@@ -82,6 +86,8 @@ class AutoTrader(BaseAutoTrader):
         prices are reported along with the volume available at each of those
         price levels.
         """
+        # remove older timestamps
+        self.remove_old_timestamps()
         self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
                          sequence_number)
         price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
@@ -91,55 +97,111 @@ class AutoTrader(BaseAutoTrader):
         if instrument == Instrument.FUTURE:
             self.last_future_price[0]=max(bid_prices)
             self.last_future_price[1]=min(ask_prices)
-            self.logger.info("futures: " + str(ask_prices))
-            if(self.last_etf_price[0]!=0):
+            self.last_future_volume[0]=bid_volumes[bid_prices.index(max(bid_prices))]
+            self.last_future_volume[1]=ask_volumes[ask_prices.index(min(ask_prices))]
+            # self.logger.info("futures: " + str(ask_prices))
+            if(self.last_etf_price[0]!=0 and self.last_sequence_number==sequence_number):
+                print("got in future")
                 if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
                     self.send_cancel_order(self.bid_id)
+                    self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
                     self.bid_id = 0
+                    self.timestamps.append(time.time())
                 if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
                     self.send_cancel_order(self.ask_id)
+                    self.logger.info("canceled ask order with ask id:"+str(self.ask_id))
                     self.ask_id = 0
+                    self.timestamps.append(time.time())
 
-
+                self.remove_old_timestamps()
                 # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.bids.add(self.bid_id)
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT-LOT_SIZE and self.last_etf_price[1]<self.last_future_price[0]:
+                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,max(1,min((POSITION_LIMIT-self.position)//LOT_SIZE,45-len(self.timestamps))))
+                    times = max(times,1)
+                    for i in range(times):
+                        if self.position+10>=POSITION_LIMIT:
+                            break
+                        self.bid_id = next(self.order_ids)
+                        self.bid_price = new_bid_price
+                        self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.timestamps.append(time.time())
+                        self.bids.add(self.bid_id)
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.asks.add(self.ask_id)
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT+LOT_SIZE and self.last_etf_price[0]>self.last_future_price[1]:
+                    times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,max(1,min((self.position + POSITION_LIMIT)//LOT_SIZE,45-len(self.timestamps))))
+                    times = max(times,1)
+                    self.logger.info(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    for i in range(times):
+                        if self.position-10>=POSITION_LIMIT:
+                            break
+                        self.ask_id = next(self.order_ids)
+                        self.ask_price = new_ask_price
+                        self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.timestamps.append(time.time())
+                        self.asks.add(self.ask_id)
 
         if instrument == Instrument.ETF:
             self.last_etf_price[0]=max(bid_prices) 
             self.last_etf_price[1]=min(ask_prices)
-            if(self.last_future_price[0]!=0):
+            self.last_etf_volume[0]=bid_volumes[bid_prices.index(max(bid_prices))]
+            self.last_etf_volume[1]=ask_volumes[ask_prices.index(min(ask_prices))]
+            if(self.last_future_price[0]!=0 and self.last_sequence_number==sequence_number):
+                print("got in etf")
                 if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
                     self.send_cancel_order(self.bid_id)
+                    self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
                     self.bid_id = 0
+                    self.timestamps.append(time.time())
                 if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
                     self.send_cancel_order(self.ask_id)
+                    self.logger.info("canceled ask order with ask id:"+str(self.ask_id))
                     self.ask_id = 0
+                    self.timestamps.append(time.time())
+
+                self.remove_old_timestamps()
 
                 # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
                 if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.bids.add(self.bid_id)
+                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,max(1,min((POSITION_LIMIT-self.position)//LOT_SIZE-1,45-len(self.timestamps))))
+                    times = max(times,1)
+                    self.logger.info(f"buy ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    for i in range(times):
+                        if self.position+10>=POSITION_LIMIT:
+                            break
+                        self.bid_id = next(self.order_ids)
+                        self.bid_price = new_bid_price
+                        self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.timestamps.append(time.time())
+                        self.bids.add(self.bid_id)
+                        # self.position-=LOT_SIZE
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
                 if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.asks.add(self.ask_id)
+                    times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,max(1,min((self.position + POSITION_LIMIT)//LOT_SIZE-1,45-len(self.timestamps))))
+                    times = max(times,1)
+                    self.logger.info(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    for i in range(times):
+                        if self.position-10<=-POSITION_LIMIT:
+                            break
+                        self.ask_id = next(self.order_ids)
+                        self.ask_price = new_ask_price
+                        self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.timestamps.append(time.time())
+                        self.asks.add(self.ask_id)
+                        # self.position+=LOT_SIZE
+        self.last_sequence_number=sequence_number
 
     def mean(lis):
         return sum(lis)/len(lis)
+    
+    def clamp(self,n, smallest, largest):
+        return max(smallest, min(n, largest))
+
+    def remove_old_timestamps(self):
+        now = time.time()
+        while self.timestamps and self.timestamps[0]<now - INTERVAL:
+            self.timestamps.popleft()
 
     def on_order_filled_message(self, client_order_id: int, price: int, volume: int) -> None:
         """Called when one of your orders is filled, partially or fully.
@@ -153,10 +215,12 @@ class AutoTrader(BaseAutoTrader):
         if client_order_id in self.bids:
             self.position += volume
             self.send_hedge_order(next(self.order_ids), Side.ASK, MIN_BID_NEAREST_TICK, volume) #limit 
+            self.timestamps.append(time.time())
             # self.send_hedge_order(next(self.order_ids), Side.ASK, self.future_prices[client_order_id], volume)
         elif client_order_id in self.asks:
             self.position -= volume
             self.send_hedge_order(next(self.order_ids), Side.BID, MAX_ASK_NEAREST_TICK, volume)
+            self.timestamps.append(time.time())
             # self.send_hedge_order(next(self.order_ids), Side.ASK, self.future_prices[client_order_id], volume)
 
     def on_order_status_message(self, client_order_id: int, fill_volume: int, remaining_volume: int,
@@ -172,12 +236,13 @@ class AutoTrader(BaseAutoTrader):
         """
         self.logger.info("received order status for order %d with fill volume %d remaining %d and fees %d",
                          client_order_id, fill_volume, remaining_volume, fees)
+        # An order is cancelled
         if remaining_volume == 0:
             if client_order_id == self.bid_id:
                 self.bid_id = 0
             elif client_order_id == self.ask_id:
                 self.ask_id = 0
-
+            self.timestamps.append(time.time())
             # It could be either a bid or an ask
             self.bids.discard(client_order_id)
             self.asks.discard(client_order_id)

@@ -243,7 +243,9 @@ class AutoTrader(BaseAutoTrader):
         """
         self.logger.info("received order status for %s order %d with fill volume %d remaining %d and fees %d","bid" if client_order_id in self.bids else "ask",
                          client_order_id, fill_volume, remaining_volume, fees)
-        # An order is cancelled
+
+        if fill_volume!=0:
+            print("etf" if client_order_id in self.etf_orders else "future")
         if remaining_volume == 0:
             if client_order_id == self.bid_id:
                 self.bid_id = 0
@@ -251,7 +253,7 @@ class AutoTrader(BaseAutoTrader):
                 self.ask_id = 0
             if fill_volume == 0:
                 self.timestamps.append(time.time())
-                print("etf" if client_order_id in self.etf_orders else "future")
+                # print("etf" if client_order_id in self.etf_orders else "future")
             # It could be either a bid or an ask
             self.bids.discard(client_order_id)
             self.asks.discard(client_order_id)

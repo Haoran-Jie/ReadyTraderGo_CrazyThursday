@@ -55,6 +55,7 @@ class AutoTrader(BaseAutoTrader):
         self.last_future_volume = [0,0]
         self.last_sequence_number = 0
         self.timestamps = deque()
+        self.etf_orders = set()
 
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
@@ -177,6 +178,7 @@ class AutoTrader(BaseAutoTrader):
                         self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.bids.add(self.bid_id)
+                        self.etf_orders.add(self.bid_id)
                         # self.position-=LOT_SIZE
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
                 if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
@@ -193,6 +195,7 @@ class AutoTrader(BaseAutoTrader):
                         self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.asks.add(self.ask_id)
+                        self.etf_orders.add(self.ask_id)
                         # self.position+=LOT_SIZE
         # self.last_sequence_number=sequence_number
 
@@ -248,6 +251,7 @@ class AutoTrader(BaseAutoTrader):
                 self.ask_id = 0
             if fill_volume == 0:
                 self.timestamps.append(time.time())
+                print("etf" if client_order_id in self.etf_orders else "future")
             # It could be either a bid or an ask
             self.bids.discard(client_order_id)
             self.asks.discard(client_order_id)

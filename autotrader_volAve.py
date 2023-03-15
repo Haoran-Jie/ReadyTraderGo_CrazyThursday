@@ -72,8 +72,16 @@ class AutoTrader(BaseAutoTrader):
         """
         self.logger.info("received hedge filled for order %d with average price %d and volume %d", client_order_id,
                          price, volume)
-    def update(self, instrument: int, sequence_number: int, ask_prices: List[int],
+ 
+    def on_order_book_update_message(self, instrument: int, sequence_number: int, ask_prices: List[int],
                                      ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]) -> None:
+        """Called periodically to report the status of an order book.
+
+        The sequence number can be used to detect missed or out-of-order
+        messages. The five best available ask (i.e. sell) and bid (i.e. buy)
+        prices are reported along with the volume available at each of those
+        price levels.
+        """
         self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
                          sequence_number)
         price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
@@ -107,8 +115,7 @@ class AutoTrader(BaseAutoTrader):
                     self.asks.add(self.ask_id)
 
         if instrument == Instrument.ETF:
-            self.last_etf_price[0]=max(bid_prices) 
-            self.last_etf_price[1]=min(ask_prices)
+            
             if(self.last_future_price[0]!=0):
                 if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
                     self.send_cancel_order(self.bid_id)
@@ -129,20 +136,9 @@ class AutoTrader(BaseAutoTrader):
                     self.ask_price = new_ask_price
                     self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
                     self.asks.add(self.ask_id)
+        self.last_etf_price[0]=max(bid_prices) 
+        self.last_etf_price[1]=min(ask_prices)
 
-    def on_order_book_update_message(self, instrument: int, sequence_number: int, ask_prices: List[int],
-                                     ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]) -> None:
-        """Called periodically to report the status of an order book.
-
-        The sequence number can be used to detect missed or out-of-order
-        messages. The five best available ask (i.e. sell) and bid (i.e. buy)
-        prices are reported along with the volume available at each of those
-        price levels.
-        """
-        update(self,)
-
-    def mean(lis):
-        return sum(lis)/len(lis)
 
     def on_order_filled_message(self, client_order_id: int, price: int, volume: int) -> None:
         """Called when one of your orders is filled, partially or fully.

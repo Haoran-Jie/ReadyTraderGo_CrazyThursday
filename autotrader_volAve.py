@@ -46,12 +46,9 @@ class AutoTrader(BaseAutoTrader):
         self.order_ids = itertools.count(1)
         self.bids = set()
         self.asks = set()
-        self.sell_boundary_long = 2
-        self.sell_boundary_short = 2
-        self.buy_boundary_long = -2
-        self.buy_boundary_short = -2
         self.ask_id = self.ask_price = self.bid_id = self.bid_price = self.position = 0
-        self.prices = {"etf":[0]*4000,"future":[0]*4000,"diff":[0]*4000}
+        self.last_etf_price = (0,0)
+        self.last_future_price = (0,0)
         self.buy_flag = self.short_flag = False
         self.future_prices = dict()
 
@@ -75,6 +72,63 @@ class AutoTrader(BaseAutoTrader):
         """
         self.logger.info("received hedge filled for order %d with average price %d and volume %d", client_order_id,
                          price, volume)
+    def update(self, instrument: int, sequence_number: int, ask_prices: List[int],
+                                     ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]) -> None:
+        self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
+                         sequence_number)
+        price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
+        new_bid_price = max(bid_prices) + price_adjustment if max(bid_prices) != 0 else 0
+        new_ask_price = min(ask_prices) + price_adjustment if min(ask_prices) != 0 else 0
+
+        if instrument == Instrument.FUTURE:
+            self.last_future_price[0]=max(bid_prices)
+            self.last_future_price[1]=min(ask_prices)
+            self.logger.info("futures: " + str(ask_prices))
+            if(self.last_etf_price[0]!=0):
+                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
+                    self.send_cancel_order(self.bid_id)
+                    self.bid_id = 0
+                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
+                    self.send_cancel_order(self.ask_id)
+                    self.ask_id = 0
+
+
+                # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
+                    self.bid_id = next(self.order_ids)
+                    self.bid_price = new_bid_price
+                    self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                    self.bids.add(self.bid_id)
+                # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
+                    self.ask_id = next(self.order_ids)
+                    self.ask_price = new_ask_price
+                    self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                    self.asks.add(self.ask_id)
+
+        if instrument == Instrument.ETF:
+            self.last_etf_price[0]=max(bid_prices) 
+            self.last_etf_price[1]=min(ask_prices)
+            if(self.last_future_price[0]!=0):
+                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
+                    self.send_cancel_order(self.bid_id)
+                    self.bid_id = 0
+                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
+                    self.send_cancel_order(self.ask_id)
+                    self.ask_id = 0
+
+                # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
+                    self.bid_id = next(self.order_ids)
+                    self.bid_price = new_bid_price
+                    self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                    self.bids.add(self.bid_id)
+                # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
+                    self.ask_id = next(self.order_ids)
+                    self.ask_price = new_ask_price
+                    self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                    self.asks.add(self.ask_id)
 
     def on_order_book_update_message(self, instrument: int, sequence_number: int, ask_prices: List[int],
                                      ask_volumes: List[int], bid_prices: List[int], bid_volumes: List[int]) -> None:
@@ -85,111 +139,7 @@ class AutoTrader(BaseAutoTrader):
         prices are reported along with the volume available at each of those
         price levels.
         """
-        self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
-                         sequence_number)
-        price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
-        new_bid_price = max(bid_prices) + price_adjustment if max(bid_prices) != 0 else 0
-        new_ask_price = min(ask_prices) + price_adjustment if min(ask_prices) != 0 else 0
-
-        if instrument == Instrument.FUTURE:
-            self.prices["future"][sequence_number]=((max(bid_prices)+min(ask_prices))/2)
-            self.logger.info("futures: " + str(self.prices["future"]))
-            if(self.prices["etf"][sequence_number]!=0):
-                now_diff = self.prices["etf"][sequence_number]-self.prices["future"][sequence_number]
-                self.prices["diff"][sequence_number]=now_diff
-                self.logger.info(now_diff)
-
-                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
-                    self.send_cancel_order(self.bid_id)
-                    self.bid_id = 0
-                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
-                    self.send_cancel_order(self.ask_id)
-                    self.ask_id = 0
-
-                # long
-                # Buy
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and now_diff<self.buy_boundary_long and abs(now_diff)<400 and not self.buy_flag:
-                    self.buy_flag=True
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.future_prices[self.bid_id]=self.prices['future'][sequence_number]
-                    self.bids.add(self.bid_id)
-                # Sell
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and now_diff>self.sell_boundary_long and abs(now_diff)<400 and self.buy_flag:
-                    print("long success")
-                    self.buy_flag=False
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.future_prices[self.ask_id]=self.prices['future'][sequence_number]
-                    self.asks.add(self.ask_id)
-                # short
-                # Buy
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and now_diff<self.buy_boundary_short and abs(now_diff)<400 and self.short_flag:
-                    print("short success")
-                    self.short_flag=False
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.future_prices[self.bid_id]=self.prices['future'][sequence_number]
-                    self.bids.add(self.bid_id)
-                # Sell
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and now_diff>self.sell_boundary_short and abs(now_diff)<400 and not self.short_flag:
-                    self.short_flag=True
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.future_prices[self.ask_id]=self.prices['future'][sequence_number]
-                    self.asks.add(self.ask_id)
-
-        if instrument == Instrument.ETF:
-            self.prices["etf"][sequence_number]=((max(bid_prices)+min(ask_prices))/2)
-            if(self.prices["future"][sequence_number]!=0):
-                now_diff = self.prices["etf"][sequence_number]-self.prices["future"][sequence_number]
-                self.prices["diff"][sequence_number]=now_diff
-                self.logger.info(now_diff)
-                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
-                    self.send_cancel_order(self.bid_id)
-                    self.bid_id = 0
-                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
-                    self.send_cancel_order(self.ask_id)
-                    self.ask_id = 0
-
-                # long
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and now_diff<self.buy_boundary_long and abs(now_diff)<200 and not self.buy_flag:
-                    self.buy_flag=True
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.future_prices[self.bid_id]=self.prices['future'][sequence_number]
-                    self.bids.add(self.bid_id)
-
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and now_diff>self.sell_boundary_long and abs(now_diff)<200 and self.buy_flag:
-                    print("long success")
-                    self.buy_flag=False
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.GOOD_FOR_DAY)
-                    self.future_prices[self.ask_id]=self.prices['future'][sequence_number]
-                    self.asks.add(self.ask_id)
-                # short
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and now_diff<self.buy_boundary_short and abs(now_diff)<200 and self.short_flag:
-                    print("short success")
-                    self.short_flag=False
-                    self.bid_id = next(self.order_ids)
-                    self.bid_price = new_bid_price
-                    self.send_insert_order(self.bid_id, Side.BUY, new_bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.future_prices[self.bid_id]=self.prices['future'][sequence_number]
-                    self.bids.add(self.bid_id)
-
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and now_diff>self.sell_boundary_short and abs(now_diff)<200 and not self.short_flag:
-                    self.short_flag=True
-                    self.ask_id = next(self.order_ids)
-                    self.ask_price = new_ask_price
-                    self.send_insert_order(self.ask_id, Side.SELL, new_ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
-                    self.future_prices[self.ask_id]=self.prices['future'][sequence_number]
-                    self.asks.add(self.ask_id)
+        update(self,)
 
     def mean(lis):
         return sum(lis)/len(lis)

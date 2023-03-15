@@ -100,8 +100,8 @@ class AutoTrader(BaseAutoTrader):
             self.last_future_volume[0]=bid_volumes[bid_prices.index(max(bid_prices))]
             self.last_future_volume[1]=ask_volumes[ask_prices.index(min(ask_prices))]
             # self.logger.info("futures: " + str(ask_prices))
-            if(self.last_etf_price[0]!=0 and self.last_sequence_number==sequence_number):
-                print("got in future")
+            if(self.last_etf_price[0]!=0):
+                # print("got in future")
                 if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
                     self.send_cancel_order(self.bid_id)
                     self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
@@ -115,26 +115,28 @@ class AutoTrader(BaseAutoTrader):
 
                 self.remove_old_timestamps()
                 # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
-                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT-LOT_SIZE and self.last_etf_price[1]<self.last_future_price[0]:
-                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,max(1,min((POSITION_LIMIT-self.position)//LOT_SIZE,45-len(self.timestamps))))
-                    times = max(times,1)
+                if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
+                    # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,max(1,min((POSITION_LIMIT-self.position)//LOT_SIZE,45-len(self.timestamps))))
+                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
+                    # times = max(times,1)
                     for i in range(times):
-                        if self.position+10>=POSITION_LIMIT:
-                            break
+                        # if self.position+10>=POSITION_LIMIT:
+                        #     break
                         self.bid_id = next(self.order_ids)
                         self.bid_price = new_bid_price
                         self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.bids.add(self.bid_id)
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
-                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT+LOT_SIZE and self.last_etf_price[0]>self.last_future_price[1]:
-                    times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,max(1,min((self.position + POSITION_LIMIT)//LOT_SIZE,45-len(self.timestamps))))
-                    times = max(times,1)
+                if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
+                    # times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,max(1,min((self.position + POSITION_LIMIT)//LOT_SIZE,45-len(self.timestamps))))
+                    times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,3)
+                    # times = max(times,1)
                     self.logger.info(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
-                    print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    # print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
                     for i in range(times):
-                        if self.position-10>=POSITION_LIMIT:
-                            break
+                        # if self.position-10>=POSITION_LIMIT:
+                        #     break
                         self.ask_id = next(self.order_ids)
                         self.ask_price = new_ask_price
                         self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
@@ -146,8 +148,8 @@ class AutoTrader(BaseAutoTrader):
             self.last_etf_price[1]=min(ask_prices)
             self.last_etf_volume[0]=bid_volumes[bid_prices.index(max(bid_prices))]
             self.last_etf_volume[1]=ask_volumes[ask_prices.index(min(ask_prices))]
-            if(self.last_future_price[0]!=0 and self.last_sequence_number==sequence_number):
-                print("got in etf")
+            if(self.last_future_price[0]!=0):
+                # print("got in etf")
                 if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
                     self.send_cancel_order(self.bid_id)
                     self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
@@ -163,12 +165,13 @@ class AutoTrader(BaseAutoTrader):
 
                 # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
                 if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
-                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,max(1,min((POSITION_LIMIT-self.position)//LOT_SIZE-1,45-len(self.timestamps))))
-                    times = max(times,1)
+                    # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,max(1,min((POSITION_LIMIT-self.position)//LOT_SIZE-1,45-len(self.timestamps))))
+                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
+                    # times = max(times,1)
                     self.logger.info(f"buy ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
                     for i in range(times):
-                        if self.position+10>=POSITION_LIMIT:
-                            break
+                        # if self.position+10>=POSITION_LIMIT:
+                        #     break
                         self.bid_id = next(self.order_ids)
                         self.bid_price = new_bid_price
                         self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
@@ -177,20 +180,21 @@ class AutoTrader(BaseAutoTrader):
                         # self.position-=LOT_SIZE
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
                 if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
-                    times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,max(1,min((self.position + POSITION_LIMIT)//LOT_SIZE-1,45-len(self.timestamps))))
-                    times = max(times,1)
+                    # times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,max(1,min((self.position + POSITION_LIMIT)//LOT_SIZE-1,45-len(self.timestamps))))
+                    times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,3)
+                    # times = max(times,1)
                     self.logger.info(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
-                    print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    # print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
                     for i in range(times):
-                        if self.position-10<=-POSITION_LIMIT:
-                            break
+                        # if self.position-10<=-POSITION_LIMIT:
+                        #     break
                         self.ask_id = next(self.order_ids)
                         self.ask_price = new_ask_price
                         self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.asks.add(self.ask_id)
                         # self.position+=LOT_SIZE
-        self.last_sequence_number=sequence_number
+        # self.last_sequence_number=sequence_number
 
     def mean(lis):
         return sum(lis)/len(lis)

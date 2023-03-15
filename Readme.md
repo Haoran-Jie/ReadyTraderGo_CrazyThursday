@@ -240,16 +240,15 @@ You may replace your autotrader with a new one at any time. When each
 tournament starts we'll use the autotrader in your GIT repository at the
 cut-off time for that tournament.
 
-
 ```powershell
 
 python3 -m venv tradergo_venv
 
+source tradergo_venv/bin/activate
+
 pip3 install PySide6
 
 pip3 install numpy
-
-source tradergo_venv/bin/activate
 
 python3 rtg.py run autotrader_pairtrading.py
 ```

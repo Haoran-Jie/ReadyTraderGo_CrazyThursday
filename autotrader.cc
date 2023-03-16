@@ -62,7 +62,38 @@ void AutoTrader::HedgeFilledMessageHandler(unsigned long clientOrderId,
     RLOG(LG_AT, LogLevel::LL_INFO) << "hedge order " << clientOrderId << " filled for " << volume
                                    << " lots at $" << price << " average price in cents";
 }
+void insertORupdate(std::map<unsigned long, unsigned long>  & m,unsigned long v,unsigned long p ){
+    if (m.find(p) == m.end()) {
+    // not found
+        m[p]=v;
+    } else {
+    // found
+        m[p]+=v;
+    }
 
+}
+/*
+    m2 - res map
+*/
+void updateMap(std::map<unsigned long, unsigned long>  & m1,std::map<unsigned long, unsigned long>  & m2){
+    for( std::map<unsigned long,unsigned long>::const_iterator it = m1.begin(); it != m1.end(); ++it )
+    {
+        unsigned long key_p = it->first;
+        unsigned long value = it->second;
+        insertORupdate(m2,value,key_p);
+    }
+}
+unsigned long volAve(std::map<unsigned long, unsigned long>  & m1){
+    unsigned long long de=0,nu=0;
+    for( std::map<unsigned long,unsigned long>::const_iterator it = m1.begin(); it != m1.end(); ++it )
+    {
+        unsigned long key_p = it->first;
+        unsigned long value = it->second;
+        de+=value;
+        nu+=value*key_p;
+    }
+    return (unsigned long) nu/de ;
+}
 void AutoTrader::OrderBookMessageHandler(Instrument instrument,
                                          unsigned long sequenceNumber,
                                          const std::array<unsigned long, TOP_LEVEL_COUNT>& askPrices,
@@ -86,6 +117,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
     {
         price_future_ask=askPrices;
         price_future_bid=bidPrices;
+        
         future_last=sequenceNumber;
         // RLOG(LG_AT, LogLevel::LL_INFO)<< sequenceNumber<<update_future[sequenceNumber]<<update_etf[sequenceNumber] ;
         if(likely(etf_last!=-1)){ // not empty
@@ -125,9 +157,9 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send2 ";
             }
         }
-        
+      
     }
-    if (instrument == Instrument::ETF)
+    else if (instrument == Instrument::ETF)
     {
         price_etf_ask=askPrices;
         price_etf_bid=bidPrices;
@@ -171,8 +203,65 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send4 ";
             }
         }
-        
+       
     }
+    if (instrument == Instrument::ETF){
+        for(int i=0;i<askPrices.size();i++){
+            insertORupdate(etf_ask,askVolumes[i],askPrices[i]);
+        }  
+        for(int i=0;i<bidVolumes.size();i++){
+            insertORupdate(etf_bid,bidVolumes[i],bidPrices[i]);
+        }  
+    }
+    else if (instrument == Instrument::FUTURE){
+        for(int i=0;i<askPrices.size();i++){
+            insertORupdate(future_ask,askVolumes[i],askPrices[i]);
+        }  
+        for(int i=0;i<bidVolumes.size();i++){
+            insertORupdate(future_bid,bidVolumes[i],bidPrices[i]);
+        }  
+    }
+    if(likely(future_last!=-1 &&etf_prev!=-1 &&  future_prev!=-1 && etf_last!=-1)){ // all needed data are here
+        updateMap(etf_ask,etf_ask_prev);
+        updateMap(etf_bid,etf_bid_prev);
+        updateMap(future_ask,future_ask_prev);
+        updateMap(future_bid,future_bid_prev);
+        
+        unsigned long bid_price_=volAve(future_bid_prev);
+        if (mBidId == 0 && newBidPrice != 0 && mPosition < POSITION_LIMIT && volAve(etf_ask_prev)<bid_price_ )
+        {
+            unsigned long newBidPrice = (bid_price_ != 0) ? bid_price_ + priceAdjustment : 0;
+            mBidId = mNextMessageId++;
+            mBidPrice = newBidPrice;
+            SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+            mBids.emplace(mBidId);
+            RLOG(LG_AT, LogLevel::LL_INFO)<<newBidPrice<< std::endl<<sequenceNumber;
+            RLOG(LG_AT, LogLevel::LL_INFO) << "send5 ";
+        }
+        unsigned long ask_price_=volAve(future_ask_prev);
+        // RLOG(LG_AT, LogLevel::LL_INFO)<<"Data:"<<sequenceNumber<<std::endl<<newBidPrice<<std::endl<<min_etf_ask<<std::endl<<max_future_bid<<std::endl<<min_future_ask<<std::endl<<max_etf_bid;
+        if (mAskId == 0 && newAskPrice != 0 && mPosition > -POSITION_LIMIT && ask_price_<volAve(etf_bid_prev))
+        {
+            unsigned long newAskPrice = (ask_price_ != 0) ? ask_price_ + priceAdjustment : 0;
+            mAskId = mNextMessageId++;
+            mAskPrice = newAskPrice;
+            SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+            mAsks.emplace(mAskId);
+            RLOG(LG_AT, LogLevel::LL_INFO) << "send6 ";
+        }
+    }
+    if (instrument == Instrument::ETF){
+        etf_ask_prev=etf_ask;
+        etf_bid_prev=etf_bid;
+        etf_prev=1; 
+    }
+    else if (instrument == Instrument::FUTURE){
+        future_ask_prev=future_ask;
+        future_bid_prev=future_bid;
+        future_prev=1;
+    }
+  
+      
 }
 
 void AutoTrader::OrderFilledMessageHandler(unsigned long clientOrderId,

@@ -22,7 +22,7 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
-
+#include <map>
 #include <boost/asio/io_context.hpp>
 
 #include <ready_trader_go/baseautotrader.h>
@@ -107,9 +107,23 @@ private:
     std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT> price_etf_bid;
     std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT> price_future_ask;
     std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT> price_future_bid;
+
  
-    unsigned long etf_last=-1;
-    unsigned long future_last=-1;
+    std::map<unsigned long, unsigned long>  etf_ask;  //price-vol
+    std::map<unsigned long, unsigned long>  etf_bid;
+    std::map<unsigned long, unsigned long>  future_ask;
+    std::map<unsigned long, unsigned long>  future_bid;
+
+    std::map<unsigned long, unsigned long>  etf_ask_prev;  //price-vol
+    std::map<unsigned long, unsigned long>  etf_bid_prev;
+    std::map<unsigned long, unsigned long>  future_ask_prev;
+    std::map<unsigned long, unsigned long>  future_bid_prev;
+ 
+    int etf_last=-1;
+    int future_last=-1;
+    int etf_prev=-1;
+    int future_prev=-1;
+
     // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_etf_ask;
     // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_etf_bid;
     // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_future_ask;

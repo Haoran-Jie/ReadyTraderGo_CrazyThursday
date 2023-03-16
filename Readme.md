@@ -251,4 +251,19 @@ pip3 install PySide6
 pip3 install numpy
 
 python3 rtg.py run autotrader_pairtrading.py
+
+
+
+
+
+
+
+
+
 ```
+
+
+
+可以改的paramters:
+
+times = max(times,1) 要或者不要

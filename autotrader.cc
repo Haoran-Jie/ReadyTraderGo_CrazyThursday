@@ -233,7 +233,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             unsigned long newBidPrice = (bid_price_ != 0) ? bid_price_ + priceAdjustment : 0;
             mBidId = mNextMessageId++;
             mBidPrice = newBidPrice;
-            SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+            SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
             mBids.emplace(mBidId);
             RLOG(LG_AT, LogLevel::LL_INFO)<<newBidPrice<< std::endl<<sequenceNumber;
             RLOG(LG_AT, LogLevel::LL_INFO) << "send5 ";
@@ -245,7 +245,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             unsigned long newAskPrice = (ask_price_ != 0) ? ask_price_ + priceAdjustment : 0;
             mAskId = mNextMessageId++;
             mAskPrice = newAskPrice;
-            SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+            SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
             mAsks.emplace(mAskId);
             RLOG(LG_AT, LogLevel::LL_INFO) << "send6 ";
         }

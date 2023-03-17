@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["run","autotrader.py"]
+            "args": ["run","autotrader_treatassame.py"]
         }
     ]
 }

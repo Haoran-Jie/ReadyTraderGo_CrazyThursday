@@ -1,6 +1,6 @@
 {
   "Engine": {
-    "MarketDataFile": "data/market_data1.csv",
+    "MarketDataFile": "data/market_data2.csv",
     "MarketEventInterval": 0.05,
     "MarketOpenDelay": 5.0,
     "MatchEventsFile": "match_events.csv",
@@ -38,6 +38,9 @@
   "Traders": {
     "TraderOne": "secret",
     "TraderTwo": "secret",
-    "CrazyThursday": "fengkuangxingqisi"
+    "CrazyThursday": "fengkuangxingqisi",
+    "CrazyThursday_removestandard": "fengkuangxingqisi",
+    "CrazyThursday_PairTrading": "fengkuangxingqisi",
+    "CrazyThursday_treatassame": "fengkuangxingqisi"
   }
 }

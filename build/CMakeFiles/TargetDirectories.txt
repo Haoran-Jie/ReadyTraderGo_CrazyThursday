@@ -1,0 +1,8 @@
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/CMakeFiles/autotrader.dir
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/CMakeFiles/edit_cache.dir
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/CMakeFiles/rebuild_cache.dir
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/libs/CMakeFiles/edit_cache.dir
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/libs/CMakeFiles/rebuild_cache.dir
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/libs/ready_trader_go/CMakeFiles/ready_trader_go_lib.dir
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/libs/ready_trader_go/CMakeFiles/edit_cache.dir
+/Users/samueljie/Library/CloudStorage/OneDrive-UniversityofCambridge/Uni/Contest/Optiver_TraderGp/pyready_trader_go/build/libs/ready_trader_go/CMakeFiles/rebuild_cache.dir

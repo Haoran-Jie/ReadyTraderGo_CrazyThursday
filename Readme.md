@@ -60,7 +60,7 @@ The archive contains:
 * data - sample market data to use for testing
 * exchange.json - configuration file for the exchange simulator
 * ready_trader_go - the Ready Trader Go source code
-* rtg.py - Use this with Python to run Ready Trader Go 
+* rtg.py - Use this with Python to run Ready Trader Go
 
 ### Autotrader configuration
 
@@ -82,9 +82,9 @@ Each autotrader is configured with a JSON file like this:
 The elements of the autotrader configuration are:
 
 * Execution - network address for sending execution requests (e.g. to place
-an order)
+  an order)
 * Information - details of a memory-mapped file for information messages broadcast
-by the exchange simulator
+  by the exchange simulator
 * TeamName - name of the team for this autotrader (each autotrader in a match
   must have a unique name)
 * Secret - password for this autotrader
@@ -140,7 +140,7 @@ The elements of the autotrader configuration are:
 * Execution - network address to listen for autotrader connections
 * Fees - details of the fee structure
 * Information - details of a memory-mapped file used to broadcast information
-messages to autotraders
+  messages to autotraders
 * Instrument - details of the instrument to be traded
 * Limits - details of the limits by which autotraders must abide
 * Traders - team names and secrets of the autotraders
@@ -234,8 +234,53 @@ git push
 
 Do _not_ put the `autotrader.py` file in a folder and do _not_ include any other
 files (any other files will be ignored). You may only submit one autotrader (i.e.
-you cannot submit both a Python and a C++ autotrader). 
+you cannot submit both a Python and a C++ autotrader).
 
 You may replace your autotrader with a new one at any time. When each
 tournament starts we'll use the autotrader in your GIT repository at the
 cut-off time for that tournament.
+
+```powershell
+
+python3 -m venv tradergo_venv
+
+source tradergo_venv/bin/activate
+
+pip3 install PySide6
+
+pip3 install numpy
+
+python3 rtg.py run autotrader_pairtrading.py
+
+
+
+
+
+
+
+
+
+```
+
+
+
+## 可以改的paramters:
+
+- times = max(times,1) 要或者不要
+- Lotsize (目前是10)
+
+- 在exchange.json里面可以把marketdata1改成marketdata2或者3或者4
+
+```
+                # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
+                if new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
+```
+
+- 这两行可以选一行 they have four occurences 上面的判定调节苛刻一些但是好像跑起来没啥区别 (要改的话就一个取消注释另外一个加上注释就好)
+
+```
+                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
+```
+
+- Similarly 上面这两行可以留一行

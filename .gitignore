@@ -3,3 +3,4 @@ match_events.csv
 __pycache__/
 info.dat
 ready_trader_go/__pycache__/
+*.log

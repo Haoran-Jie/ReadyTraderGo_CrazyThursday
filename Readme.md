@@ -264,6 +264,23 @@ python3 rtg.py run autotrader_pairtrading.py
 
 
 
-可以改的paramters:
+## 可以改的paramters:
 
-times = max(times,1) 要或者不要
+- times = max(times,1) 要或者不要
+- Lotsize (目前是10)
+
+- 在exchange.json里面可以把marketdata1改成marketdata2或者3或者4
+
+```
+                # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
+                if new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
+```
+
+- 这两行可以选一行 they have four occurences 上面的判定调节苛刻一些但是好像跑起来没啥区别 (要改的话就一个取消注释另外一个加上注释就好)
+
+```
+                    times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
+```
+
+- Similarly 上面这两行可以留一行

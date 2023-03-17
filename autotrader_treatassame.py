@@ -138,7 +138,7 @@ class AutoTrader(BaseAutoTrader):
                     times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,min((self.position + POSITION_LIMIT)//(2*LOT_SIZE),50-len(self.timestamps)))
                     # times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,3)
                     # times = max(times,1)
-                    self.logger.info(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    self.logger.info(f"sell ETF with {LOT_SIZE} per lot for {times} times, now I have {self.position} ETFs")
                     # print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
                     for i in range(times):
                         # if self.position-10>=POSITION_LIMIT:
@@ -176,7 +176,7 @@ class AutoTrader(BaseAutoTrader):
                     times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps)))
                     # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
                     # times = max(times,1)
-                    self.logger.info(f"buy ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    self.logger.info(f"buy ETF with {LOT_SIZE} per lot for {times} times, now I have {self.position} ETFs")
                     for i in range(times):
                         # if self.position+10>=POSITION_LIMIT:
                         #     break

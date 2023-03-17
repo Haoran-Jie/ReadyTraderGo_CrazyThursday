@@ -110,7 +110,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mBidId = mNextMessageId++;
                 mBidPrice = newBidPrice;
-                SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+                SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
                 mBids.emplace(mBidId);
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send1 ";
             }
@@ -120,7 +120,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mAskId = mNextMessageId++;
                 mAskPrice = newAskPrice;
-                SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+                SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
                 mAsks.emplace(mAskId);
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send2 ";
             }
@@ -154,7 +154,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mBidId = mNextMessageId++;
                 mBidPrice = newBidPrice;
-                SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+                SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
                 mBids.emplace(mBidId);
                 RLOG(LG_AT, LogLevel::LL_INFO)<<newBidPrice<< std::endl<<sequenceNumber;
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send3 ";
@@ -166,7 +166,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mAskId = mNextMessageId++;
                 mAskPrice = newAskPrice;
-                SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::FILL_AND_KILL);
+                SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
                 mAsks.emplace(mAskId);
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send4 ";
             }

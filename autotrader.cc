@@ -83,7 +83,13 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
     unsigned long newmidPrice = (newAskPrice+newBidPrice)/2;
     // RLOG(LG_AT, LogLevel::LL_INFO) <<newBidPrice <<"Debug:max_ask_Prices_temp " << max_bid_Prices_temp;
     printf("b %d ,a %d\n",blotsize,alotsize);
-
+    
+    if (alotsize<=0&&blotsize<190|| alotsize==-10&&blotsize==190){
+        alotsize+=10;
+    }
+    else if (blotsize<=0&&alotsize<190||blotsize==-10&&alotsize==190){
+        blotsize+=10;
+    }
     if (instrument == Instrument::FUTURE)
     {
         price_future_ask=askPrices;
@@ -197,8 +203,7 @@ void AutoTrader::OrderFilledMessageHandler(unsigned long clientOrderId,
         mPosition -= (long)volume;
         printf("Id:%lu buy %lu, mPosition %lu\n",clientOrderId,volume,mPosition);
         historylotSize+=volume;
-        blotsize=100-historylotSize; //update next available Hedge
-        alotsize=historylotSize-(-100);
+     
         SendHedgeOrder(mNextMessageId++, Side::BUY, MAX_ASK_NEAREST_TICK, volume);
     }
     else if (mBids.count(clientOrderId) == 1)
@@ -206,10 +211,11 @@ void AutoTrader::OrderFilledMessageHandler(unsigned long clientOrderId,
         mPosition += (long)volume;
         printf("Id:%lu sell %lu, mPosition %lu\n",clientOrderId,volume,mPosition);
         historylotSize-=volume;
-        alotsize=historylotSize-(-100); //update next available
-        blotsize=100-historylotSize;
+ 
         SendHedgeOrder(mNextMessageId++, Side::SELL, MIN_BID_NEARST_TICK, volume);
     }
+    blotsize=90-historylotSize; //update next available Hedge
+    alotsize=historylotSize-(-90);
 
 }
 

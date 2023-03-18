@@ -286,3 +286,4 @@ python3 rtg.py run autotrader_pairtrading.py
 ```
 
 - Similarly 上面这两行可以留一行
+- 可以把cancel删掉或者留一点

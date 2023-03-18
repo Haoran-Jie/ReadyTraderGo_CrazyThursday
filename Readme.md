@@ -262,13 +262,15 @@ python3 rtg.py run autotrader_pairtrading.py
 
 ```
 
+## TODO:
 
+* 调整volume
+* randomly 调整price, 增加一个noise
 
 ## 可以改的paramters:
 
 - times = max(times,1) 要或者不要
 - Lotsize (目前是10)
-
 - 在exchange.json里面可以把marketdata1改成marketdata2或者3或者4
 
 ```

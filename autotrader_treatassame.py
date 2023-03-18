@@ -103,16 +103,16 @@ class AutoTrader(BaseAutoTrader):
             # self.logger.info("futures: " + str(ask_prices))
             if(self.last_etf_price[0]!=0):
                 # print("got in future")
-                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
-                    self.send_cancel_order(self.bid_id)
-                    self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
-                    self.bid_id = 0
-                    self.timestamps.append(time.time())
-                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
-                    self.send_cancel_order(self.ask_id)
-                    self.logger.info("canceled ask order with ask id:"+str(self.ask_id))
-                    self.ask_id = 0
-                    self.timestamps.append(time.time())
+                # if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
+                #     self.send_cancel_order(self.bid_id)
+                #     self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
+                #     self.bid_id = 0
+                #     self.timestamps.append(time.time())
+                # if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
+                #     self.send_cancel_order(self.ask_id)
+                #     self.logger.info("canceled ask order with ask id:"+str(self.ask_id))
+                #     self.ask_id = 0
+                #     self.timestamps.append(time.time())
 
                 self.remove_old_timestamps()
                 # Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
@@ -157,16 +157,16 @@ class AutoTrader(BaseAutoTrader):
             self.last_etf_volume[1]=ask_volumes[ask_prices.index(min(ask_prices))]
             if(self.last_future_price[0]!=0):
                 # print("got in etf")
-                if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
-                    self.send_cancel_order(self.bid_id)
-                    self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
-                    self.bid_id = 0
-                    self.timestamps.append(time.time())
-                if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
-                    self.send_cancel_order(self.ask_id)
-                    self.logger.info("canceled ask order with ask id:"+str(self.ask_id))
-                    self.ask_id = 0
-                    self.timestamps.append(time.time())
+                # if self.bid_id != 0 and new_bid_price not in (self.bid_price, 0):
+                #     self.send_cancel_order(self.bid_id)
+                #     self.logger.info("canceled bid order with bid id:"+str(self.bid_id))
+                #     self.bid_id = 0
+                #     self.timestamps.append(time.time())
+                # if self.ask_id != 0 and new_ask_price not in (self.ask_price, 0):
+                #     self.send_cancel_order(self.ask_id)
+                #     self.logger.info("canceled ask order with ask id:"+str(self.ask_id))
+                #     self.ask_id = 0
+                #     self.timestamps.append(time.time())
 
                 self.remove_old_timestamps()
 

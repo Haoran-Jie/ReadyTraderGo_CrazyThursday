@@ -310,3 +310,9 @@ source tradergo_venv/bin/activate
 
 python3 rtg.py run autotrader_pairtrading.py
 ```
+fix bug
+```
+netstat -a | grep -i “listen” 
+lsof -i
+kill -9
+```

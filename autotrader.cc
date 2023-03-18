@@ -29,7 +29,7 @@ using namespace ReadyTraderGo;
 
 RTG_INLINE_GLOBAL_LOGGER_WITH_CHANNEL(LG_AT, "AUTO")
 
-constexpr int LOT_SIZE = 10;
+constexpr int LOT_SIZE = 100;
 constexpr int POSITION_LIMIT = 100;
 constexpr int TICK_SIZE_IN_CENTS = 100;
 constexpr int MIN_BID_NEARST_TICK = (MINIMUM_BID + TICK_SIZE_IN_CENTS) / TICK_SIZE_IN_CENTS * TICK_SIZE_IN_CENTS;
@@ -70,18 +70,20 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
                                          const std::array<unsigned long, TOP_LEVEL_COUNT>& bidPrices,
                                          const std::array<unsigned long, TOP_LEVEL_COUNT>& bidVolumes)
 {
-    RLOG(LG_AT, LogLevel::LL_INFO) << "order book received for " << instrument << " instrument (future is 0 else etf)"
-                                   << ": ask prices: " << askPrices[0]
-                                   << "; ask volumes: " << askVolumes[0]
-                                   << "; bid prices: " << bidPrices[0]
-                                   << "; bid volumes: " << bidVolumes[0];
+    RLOG(LG_AT, LogLevel::LL_INFO) << "order book received for " << instrument << " instrument (future is 0 else etf)";
+                                //    << ": ask prices: " << askPrices[0] << "; ask volumes: " << askVolumes[0]
+                                //   << "; bid prices: " << bidPrices[0]  << "; bid volumes: " << bidVolumes[0];
+
     unsigned long priceAdjustment = - (mPosition / LOT_SIZE) * TICK_SIZE_IN_CENTS;
     unsigned long min_ask_Prices_temp = *std::min_element(askPrices.begin(), askPrices.end());
     unsigned long max_bid_Prices_temp = *std::max_element(bidPrices.begin(), bidPrices.end());
     unsigned long newAskPrice = (min_ask_Prices_temp != 0) ? min_ask_Prices_temp + priceAdjustment : 0;
     unsigned long newBidPrice = (max_bid_Prices_temp != 0) ? max_bid_Prices_temp + priceAdjustment : 0;
     // RLOG(LG_AT, LogLevel::LL_INFO) <<newBidPrice <<"Debug:max_ask_Prices_temp " << max_bid_Prices_temp;
-    
+    printf("b %d ,a %d\n",blotsize,alotsize);
+    if(blotsize==0){ //0 is not valid
+        return;
+    }
     if (instrument == Instrument::FUTURE)
     {
         price_future_ask=askPrices;
@@ -110,7 +112,8 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mBidId = mNextMessageId++;
                 mBidPrice = newBidPrice;
-                SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
+                printf("%lu,send BUY FUTURE\n",mBidId);
+                SendInsertOrder(mBidId, Side::BUY, newBidPrice, alotsize, Lifespan::FILL_AND_KILL);
                 mBids.emplace(mBidId);
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send1 ";
             }
@@ -120,8 +123,9 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mAskId = mNextMessageId++;
                 mAskPrice = newAskPrice;
-                SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
+                SendInsertOrder(mAskId, Side::SELL, newAskPrice, blotsize, Lifespan::FILL_AND_KILL);
                 mAsks.emplace(mAskId);
+                printf("%lu,send SELL FUTURE\n",mAskId);
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send2 ";
             }
         }
@@ -154,10 +158,11 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mBidId = mNextMessageId++;
                 mBidPrice = newBidPrice;
-                SendInsertOrder(mBidId, Side::BUY, newBidPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
+                SendInsertOrder(mBidId, Side::BUY, newBidPrice, alotsize, Lifespan::FILL_AND_KILL);
                 mBids.emplace(mBidId);
                 RLOG(LG_AT, LogLevel::LL_INFO)<<newBidPrice<< std::endl<<sequenceNumber;
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send3 ";
+                printf("%lu,send ETF BUY\n",mBidId);
             }
             unsigned long min_future_ask= *std::min_element(price_future_ask.begin(),price_future_ask.end());
             unsigned long max_etf_bid=*std::max_element(price_etf_bid.begin(),price_etf_bid.end());
@@ -166,9 +171,10 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             {
                 mAskId = mNextMessageId++;
                 mAskPrice = newAskPrice;
-                SendInsertOrder(mAskId, Side::SELL, newAskPrice, LOT_SIZE, Lifespan::GOOD_FOR_DAY);
+                SendInsertOrder(mAskId, Side::SELL, newAskPrice, blotsize, Lifespan::FILL_AND_KILL);
                 mAsks.emplace(mAskId);
                 RLOG(LG_AT, LogLevel::LL_INFO) << "send4 ";
+                printf("%lu,send ETF SELL\n",mAskId);
             }
         }
         
@@ -181,16 +187,27 @@ void AutoTrader::OrderFilledMessageHandler(unsigned long clientOrderId,
 {
     RLOG(LG_AT, LogLevel::LL_INFO) << "order " << clientOrderId << " filled for " << volume
                                    << " lots at $" << price << " cents";
+    
+
     if (mAsks.count(clientOrderId) == 1)
     {
         mPosition -= (long)volume;
+        printf("Id:%lu buy %lu, mPosition %lu\n",clientOrderId,volume,mPosition);
+        historylotSize+=volume;
+        blotsize=100-historylotSize; //update next available
+        alotsize=historylotSize-(-100);
         SendHedgeOrder(mNextMessageId++, Side::BUY, MAX_ASK_NEAREST_TICK, volume);
     }
     else if (mBids.count(clientOrderId) == 1)
     {
         mPosition += (long)volume;
+        printf("Id:%lu sell %lu, mPosition %lu\n",clientOrderId,volume,mPosition);
+        historylotSize-=volume;
+        alotsize=historylotSize-(-100); //update next available
+        blotsize=100-historylotSize;
         SendHedgeOrder(mNextMessageId++, Side::SELL, MIN_BID_NEARST_TICK, volume);
     }
+
 }
 
 void AutoTrader::OrderStatusMessageHandler(unsigned long clientOrderId,

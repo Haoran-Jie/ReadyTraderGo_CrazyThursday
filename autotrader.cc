@@ -81,9 +81,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
     unsigned long newBidPrice = (max_bid_Prices_temp != 0) ? max_bid_Prices_temp + priceAdjustment : 0;
     // RLOG(LG_AT, LogLevel::LL_INFO) <<newBidPrice <<"Debug:max_ask_Prices_temp " << max_bid_Prices_temp;
     printf("b %d ,a %d\n",blotsize,alotsize);
-    if(blotsize==0){ //0 is not valid
-        return;
-    }
+
     if (instrument == Instrument::FUTURE)
     {
         price_future_ask=askPrices;
@@ -105,10 +103,10 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             unsigned long min_etf_ask=*std::min_element(price_etf_ask.begin(),price_etf_ask.end());
             unsigned long max_future_bid=*std::max_element(price_future_bid.begin(),price_future_bid.end());
           
-          
+
             // RLOG(LG_AT, LogLevel::LL_INFO) << "Debug: min_etf_ask  "<<min_etf_ask;
             // Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
-            if (mBidId == 0 && newBidPrice != 0 && mPosition < POSITION_LIMIT && min_etf_ask<max_future_bid)        
+            if (mBidId == 0 && newBidPrice != 0 && mPosition < POSITION_LIMIT && min_etf_ask<max_future_bid && alotsize)        
             {
                 mBidId = mNextMessageId++;
                 mBidPrice = newBidPrice;
@@ -119,7 +117,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             }
             unsigned long min_future_ask= *std::min_element(price_future_ask.begin(),price_future_ask.end());
             unsigned long max_etf_bid=*std::max_element(price_etf_bid.begin(),price_etf_bid.end());
-            if (mAskId == 0 && newAskPrice != 0 && mPosition > -POSITION_LIMIT && min_future_ask <max_etf_bid)
+            if (mAskId == 0 && newAskPrice != 0 && mPosition > -POSITION_LIMIT && min_future_ask <max_etf_bid &&blotsize)
             {
                 mAskId = mNextMessageId++;
                 mAskPrice = newAskPrice;
@@ -154,7 +152,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             unsigned long max_future_bid=*std::max_element(price_future_bid.begin(),price_future_bid.end());
             // Buy ETF sell Future when min(ask prices) of ETF < max(bid price) of future
             RLOG(LG_AT, LogLevel::LL_INFO)<<(mBidId == 0)<<(newBidPrice != 0)<<(mPosition < POSITION_LIMIT)<<(min_etf_ask<max_future_bid);
-            if (mBidId == 0 && newBidPrice != 0 && mPosition < POSITION_LIMIT && min_etf_ask<max_future_bid)
+            if (mBidId == 0 && newBidPrice != 0 && mPosition < POSITION_LIMIT && min_etf_ask<max_future_bid&&alotsize)
             {
                 mBidId = mNextMessageId++;
                 mBidPrice = newBidPrice;
@@ -167,7 +165,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
             unsigned long min_future_ask= *std::min_element(price_future_ask.begin(),price_future_ask.end());
             unsigned long max_etf_bid=*std::max_element(price_etf_bid.begin(),price_etf_bid.end());
             // RLOG(LG_AT, LogLevel::LL_INFO)<<"Data:"<<sequenceNumber<<std::endl<<newBidPrice<<std::endl<<min_etf_ask<<std::endl<<max_future_bid<<std::endl<<min_future_ask<<std::endl<<max_etf_bid;
-            if (mAskId == 0 && newAskPrice != 0 && mPosition > -POSITION_LIMIT && min_future_ask <max_etf_bid)
+            if (mAskId == 0 && newAskPrice != 0 && mPosition > -POSITION_LIMIT && min_future_ask <max_etf_bid&&blotsize)
             {
                 mAskId = mNextMessageId++;
                 mAskPrice = newAskPrice;

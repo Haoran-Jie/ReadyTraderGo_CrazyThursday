@@ -7,3 +7,5 @@ tradergo_venv/
 autotrader.log
 exchange.log
 *.log
+tradergo_venv/lib/python3.11/site-packages/PySide6/__pycache__/
+tradergo_venv/lib/python3.11/site-packages/PySide6/support/__pycache__/

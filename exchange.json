@@ -5,7 +5,7 @@
     "MarketOpenDelay": 5.0,
     "MatchEventsFile": "match_events.csv",
     "ScoreBoardFile": "score_board.csv",
-    "Speed": 2.0,
+    "Speed": 5.0,
     "TickInterval": 0.25
   },
   "Execution": {
@@ -36,13 +36,16 @@
     "PositionLimit": 100
   },
   "Traders": {
-    "TraderOne": "secret",
-    "TraderTwo": "secret",
     "CrazyThursday": "fengkuangxingqisi",
     "CrazyThursday_removestandard": "fengkuangxingqisi",
     "CrazyThursday_PairTrading": "fengkuangxingqisi",
     "CrazyThursday_treatassame": "fengkuangxingqisi",
     "CrazyThursday_treatassame_volume": "fengkuangxingqisi",
-    "CrazyThursday_treatassame_gfd": "fengkuangxingqisi"
+    "CrazyThursday_treatassame_gfd": "fengkuangxingqisi",
+    "CrazyThursday_treatassame_gfd_copy": "fengkuangxingqisi",
+    "CrazyThursday_treatassame_gfd_copy2": "fengkuangxingqisi",
+    "CrazyThursday_treatassame_gfd_copy3": "fengkuangxingqisi",
+    "CrazyThursday_treatassame_gfd_copy4": "fengkuangxingqisi",
+    "CrazyThursday_treatassame_gfd_copy5": "fengkuangxingqisi"
   }
 }

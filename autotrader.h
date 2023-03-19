@@ -111,6 +111,10 @@ private:
     unsigned long etf_last=-1;
     unsigned long future_last=-1;
     unsigned long historylotSize=0;
+
+     unsigned long newAskPrice = 0;
+    unsigned long newBidPrice = 0;
+
     int blotsize=50;
     int alotsize=50;
     // std::array<std::array<unsigned long,ReadyTraderGo::TOP_LEVEL_COUNT>,4000> price_etf_ask;

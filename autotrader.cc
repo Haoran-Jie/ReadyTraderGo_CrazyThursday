@@ -78,8 +78,7 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
     unsigned long min_ask_Prices_temp = *std::min_element(askPrices.begin(), askPrices.end());
     unsigned long max_bid_Prices_temp = *std::max_element(bidPrices.begin(), bidPrices.end());
 
-    unsigned long newAskPrice = (min_ask_Prices_temp != 0) ? min_ask_Prices_temp + priceAdjustment : 0;
-    unsigned long newBidPrice = (max_bid_Prices_temp != 0) ? max_bid_Prices_temp + priceAdjustment : 0;
+   
     unsigned long newmidPrice = (newAskPrice+newBidPrice)/2;
     // RLOG(LG_AT, LogLevel::LL_INFO) <<newBidPrice <<"Debug:max_ask_Prices_temp " << max_bid_Prices_temp;
     printf("b %d ,a %d\n",blotsize,alotsize);
@@ -139,7 +138,8 @@ void AutoTrader::OrderBookMessageHandler(Instrument instrument,
          // std::copy_n(askPrices.begin(), askPrices.size(), price_etf_ask[sequenceNumber].begin());
         // std::copy_n(bidPrices.begin(), bidPrices.size(), price_etf_bid[sequenceNumber].begin());
         etf_last=sequenceNumber;
-      
+        newAskPrice = (min_ask_Prices_temp != 0) ? min_ask_Prices_temp + priceAdjustment : 0;
+        newBidPrice = (max_bid_Prices_temp != 0) ? max_bid_Prices_temp + priceAdjustment : 0;
         if(likely(future_last!=-1)){ // not empty
             if (mAskId != 0 && newAskPrice != 0 && newAskPrice != mAskPrice)
             {

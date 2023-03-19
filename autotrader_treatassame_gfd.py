@@ -59,7 +59,6 @@ class AutoTrader(BaseAutoTrader):
         self.new_bid_price = 0
         self.new_ask_price = 0
         self.active_orders = deque()
-        self.active_amounts = 0
         self.order_volumes = [0]*4000
 
     def on_error_message(self, client_order_id: int, error_message: bytes) -> None:
@@ -132,6 +131,7 @@ class AutoTrader(BaseAutoTrader):
                 # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                 if self.new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                     times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    # times = min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps))
                     #  -100<position<100
                     #  每秒50个operation以内
                     # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
@@ -153,6 +153,7 @@ class AutoTrader(BaseAutoTrader):
                 # if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                 if self.new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                     times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,min((self.position + POSITION_LIMIT)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    # times = min((self.position + POSITION_LIMIT)//(2*LOT_SIZE),50-len(self.timestamps))
                     # times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,3)
                     # times = max(times,1)
                     # self.logger.info(f"sell ETF with {LOT_SIZE} per lot for {times} times, now I have {self.position} ETFs")
@@ -199,6 +200,7 @@ class AutoTrader(BaseAutoTrader):
                 # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                 if self.new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                     times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    # times = min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps))
                     if times>=1:
                     # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
                     # times = max(times,1)
@@ -221,6 +223,7 @@ class AutoTrader(BaseAutoTrader):
                 # if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                 if self.new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                     times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,min((self.position + POSITION_LIMIT)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    # times = min((self.position + POSITION_LIMIT)//(2*LOT_SIZE),50-len(self.timestamps))
                     # times = max(times,1)
                     # times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,3)
                     # times = max(times,1)
@@ -243,7 +246,7 @@ class AutoTrader(BaseAutoTrader):
                         # self.position+=LOT_SIZE
         # self.last_sequence_number=sequence_number
         self.remove_old_orders()
-        
+
     def mean(lis):
         return sum(lis)/len(lis)
     
@@ -260,6 +263,7 @@ class AutoTrader(BaseAutoTrader):
             for i in range(num):
                 removed_order = self.active_orders.popleft()
                 self.send_cancel_order(removed_order)
+                self.timestamps.append(time.time())
         active_amounts_buy = 0
         active_amounts_sell = 0
         for order_ids in self.active_orders:

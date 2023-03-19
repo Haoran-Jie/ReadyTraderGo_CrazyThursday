@@ -18,6 +18,7 @@
 import asyncio
 import itertools
 import time
+import random
 from typing import List
 from collections import deque
 
@@ -29,7 +30,7 @@ POSITION_LIMIT = 100
 TICK_SIZE_IN_CENTS = 100
 MIN_BID_NEAREST_TICK = (MINIMUM_BID + TICK_SIZE_IN_CENTS) // TICK_SIZE_IN_CENTS * TICK_SIZE_IN_CENTS
 MAX_ASK_NEAREST_TICK = MAXIMUM_ASK // TICK_SIZE_IN_CENTS * TICK_SIZE_IN_CENTS
-
+RANDOM_SIZE = 5
 
 class AutoTrader(BaseAutoTrader):
     """Example Auto-trader.
@@ -90,7 +91,7 @@ class AutoTrader(BaseAutoTrader):
         self.remove_old_timestamps()
         self.logger.info("received order book for instrument %s with sequence number %d", "future" if instrument==0 else "etf",
                          sequence_number)
-        price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS
+        price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS + random.randint(-RANDOM_SIZE,RANDOM_SIZE)*TICK_SIZE_IN_CENTS
         # price_adjustment = 0
         new_bid_price = max(bid_prices) + price_adjustment if max(bid_prices) != 0 else 0
         new_ask_price = min(ask_prices) + price_adjustment if min(ask_prices) != 0 else 0

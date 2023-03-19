@@ -1,11 +1,11 @@
 {
   "Engine": {
-    "MarketDataFile": "data/market_data1.csv",
+    "MarketDataFile": "data/market_data2.csv",
     "MarketEventInterval": 0.05,
     "MarketOpenDelay": 5.0,
     "MatchEventsFile": "match_events.csv",
     "ScoreBoardFile": "score_board.csv",
-    "Speed": 1.0,
+    "Speed": 2.0,
     "TickInterval": 0.25
   },
   "Execution": {
@@ -41,6 +41,8 @@
     "CrazyThursday": "fengkuangxingqisi",
     "CrazyThursday_removestandard": "fengkuangxingqisi",
     "CrazyThursday_PairTrading": "fengkuangxingqisi",
-    "CrazyThursday_treatassame": "fengkuangxingqisi"
+    "CrazyThursday_treatassame": "fengkuangxingqisi",
+    "CrazyThursday_treatassame_volume": "fengkuangxingqisi",
+    "CrazyThursday_treatassame_gfd": "fengkuangxingqisi"
   }
 }

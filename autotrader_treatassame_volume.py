@@ -130,13 +130,14 @@ class AutoTrader(BaseAutoTrader):
                     #  每秒50个operation以内
                     # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
                     # times = max(times,1)
-                    for i in range(times):
+                    # for i in range(times):
                         # if self.position+10>=POSITION_LIMIT:
                         #     break
+                    if times>=1:
                         self.bid_id = next(self.order_ids)
                         self.bid_price = self.new_bid_price
                         # self.bid_price = self.last_etf_price[0]
-                        self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, int(LOT_SIZE*times), Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.bids.add(self.bid_id)
                 # Sell ETF buy Future when max(bid price) of ETF > min(ask price) of future
@@ -145,15 +146,16 @@ class AutoTrader(BaseAutoTrader):
                     times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,min((self.position + POSITION_LIMIT)//(2*LOT_SIZE),50-len(self.timestamps)))
                     # times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,3)
                     # times = max(times,1)
-                    self.logger.info(f"sell ETF with {LOT_SIZE} per lot for {times} times, now I have {self.position} ETFs")
-                    # print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
-                    for i in range(times):
+                    # self.logger.info(f"sell ETF with {LOT_SIZE} per lot for {times} times, now I have {self.position} ETFs")
+                    # # print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    # for i in range(times):
                         # if self.position-10>=POSITION_LIMIT:
                         #     break
+                    if times>=1:
                         self.ask_id = next(self.order_ids)
                         self.ask_price = self.new_ask_price
                         # self.ask_price = self.last_etf_price[1]
-                        self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, int(LOT_SIZE*times), Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.asks.add(self.ask_id)
 
@@ -162,8 +164,8 @@ class AutoTrader(BaseAutoTrader):
             self.last_etf_price[1]=min(ask_prices)
             self.last_etf_volume[0]=bid_volumes[bid_prices.index(max(bid_prices))]
             self.last_etf_volume[1]=ask_volumes[ask_prices.index(min(ask_prices))]
-            price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS #+ random.randint(-RANDOM_SIZE,RANDOM_SIZE)*TICK_SIZE_IN_CENTS
-            # price_adjustment = 0
+            #price_adjustment = - (self.position // LOT_SIZE) * TICK_SIZE_IN_CENTS #+ random.randint(-RANDOM_SIZE,RANDOM_SIZE)*TICK_SIZE_IN_CENTS
+            price_adjustment = 0
             self.new_ask_price = max(bid_prices) + price_adjustment if max(bid_prices) != 0 else 0
             self.new_bid_price = min(ask_prices) + price_adjustment if min(ask_prices) != 0 else 0
             if(self.last_future_price[0]!=0):
@@ -185,16 +187,17 @@ class AutoTrader(BaseAutoTrader):
                 # if self.bid_id == 0 and new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                 if self.new_bid_price != 0 and self.position < POSITION_LIMIT and self.last_etf_price[1]<self.last_future_price[0]:
                     times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,min((POSITION_LIMIT-self.position)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    if times>=1:
                     # times = self.clamp(self.last_etf_volume[1]//LOT_SIZE,0,3)
                     # times = max(times,1)
-                    self.logger.info(f"buy ETF with {LOT_SIZE} per lot for {times} times, now I have {self.position} ETFs")
-                    for i in range(times):
+                    # self.logger.info(f"buy ETF with {LOT_SIZE} per lot for {times} times, now I have {self.position} ETFs")
+                    # for i in range(times):
                         # if self.position+10>=POSITION_LIMIT:
                         #     break
                         self.bid_id = next(self.order_ids)
                         self.bid_price = self.new_bid_price
                         # self.bid_price = self.last_etf_price[0]
-                        self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.send_insert_order(self.bid_id, Side.BUY, self.bid_price, int(LOT_SIZE*times), Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.bids.add(self.bid_id)
                         self.etf_orders.add(self.bid_id)
@@ -203,17 +206,19 @@ class AutoTrader(BaseAutoTrader):
                 # if self.ask_id == 0 and new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                 if self.new_ask_price != 0 and self.position > -POSITION_LIMIT and self.last_etf_price[0]>self.last_future_price[1]:
                     times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,min((self.position + POSITION_LIMIT)//(2*LOT_SIZE),50-len(self.timestamps)))
+                    # times = max(times,1)
                     # times = self.clamp(self.last_etf_volume[0]//LOT_SIZE,0,3)
                     # times = max(times,1)
-                    self.logger.info(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
-                    # print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
-                    for i in range(times):
+                    # self.logger.info(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    # # print(f"sell ETF with 10 per lot for {times} times, now I have {self.position} ETFs")
+                    # for i in range(times):
                         # if self.position-10<=-POSITION_LIMIT:
                         #     break
+                    if times>=1:
                         self.ask_id = next(self.order_ids)
                         self.ask_price = self.new_ask_price
                         # self.ask_price = self.last_etf_price[1]
-                        self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, LOT_SIZE, Lifespan.FILL_AND_KILL)
+                        self.send_insert_order(self.ask_id, Side.SELL, self.ask_price, int(LOT_SIZE*times), Lifespan.FILL_AND_KILL)
                         self.timestamps.append(time.time())
                         self.asks.add(self.ask_id)
                         self.etf_orders.add(self.ask_id)
